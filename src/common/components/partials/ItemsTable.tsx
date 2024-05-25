@@ -3,7 +3,7 @@ import MenuPopover from '@common/components/lib/utils/MenuPopover/MenuPopover';
 import { CRUD_ACTION, CrudRoutes, CrudRow, Id } from '@common/defs/types';
 import usePermissions from '@modules/permissions/hooks/usePermissions';
 import { UseItems } from '@common/hooks/useItems';
-import { DeleteOutline, Edit, MoreVert } from '@mui/icons-material';
+import { Cancel, DeleteOutline, Edit, MoreVert } from '@mui/icons-material';
 import { Box, Button, Card, IconButton, MenuItem } from '@mui/material';
 import Skeleton from '@mui/material/Skeleton';
 import Typography from '@mui/material/Typography';
@@ -33,10 +33,12 @@ const ItemsTable = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
 ) => {
   const { namespace, routes, useItems, columns: initColumns, itemToRow, sortModel } = props;
   const router = useRouter();
-  const { items, deleteOne } = useItems({ fetchItems: true });
+  const { items, deleteOne, cancelOne, restoreOne } = useItems({ fetchItems: true });
   const { can, canNot } = usePermissions();
   const [rows, setRows] = useState<Row[]>([]);
   const [toDeleteId, setToDeleteId] = useState<Id | null>(null);
+  const [toCancelId, setToCancelId] = useState<Id | null>(null);
+  const [toRestoreId, setToRestoreId] = useState<Id | null>(null);
   const [columns, setColumns] = useState<GridColumns>(initColumns);
   useEffect(() => {
     const actionsColumn: GridEnrichedColDef<Row> = {
@@ -77,9 +79,31 @@ const ItemsTable = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                     router.push(routes.UpdateOne.replace('{id}', params.row.id.toString()));
                   }}
                 >
-                  <Edit /> Éditer
+                  <Edit /> Edit
                 </MenuItem>
               )}
+              {!params.row.isCanceled && can(namespace, CRUD_ACTION.UPDATE) && (
+                <MenuItem
+                  onClick={() => {
+                    setToCancelId(params.row.id);
+                    handleMenuClose();
+                  }}
+                  sx={{ color: 'error.main' }}
+                >
+                  <Cancel /> Cancel
+                </MenuItem>
+              )}
+              {params.row.isCanceled ? can(namespace, CRUD_ACTION.UPDATE) && (
+                <MenuItem
+                  onClick={() => {
+                    setToRestoreId(params.row.id);
+                    handleMenuClose();
+                  }}
+                  sx={{ color: 'success.main' }}
+                >
+                  <Cancel /> Restore
+                </MenuItem>
+              ): null}
               {can(namespace, CRUD_ACTION.DELETE) && (
                 <MenuItem
                   onClick={() => {
@@ -88,7 +112,7 @@ const ItemsTable = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                   }}
                   sx={{ color: 'error.main' }}
                 >
-                  <DeleteOutline /> Supprimer
+                  <DeleteOutline /> Delete
                 </MenuItem>
               )}
             </MenuPopover>
@@ -168,6 +192,56 @@ const ItemsTable = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                     }}
                   >
                     Supprimer
+                  </Button>
+                }
+              />
+              <ConfirmDialog
+                open={toCancelId !== null}
+                onClose={() => setToCancelId(null)}
+                title="Cancel"
+                content={
+                  <Typography variant="body1" color="textSecondary">
+                    Êtes-vous sûr de vouloir supprimer cet élément ? <br /> Cette action est
+                    irréversible.
+                  </Typography>
+                }
+                action={
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => {
+                      if (toCancelId) {
+                        cancelOne(toCancelId, { displayProgress: true, displaySuccess: true });
+                        setToCancelId(null);
+                      }
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                }
+              />
+              <ConfirmDialog
+                open={toRestoreId !== null}
+                onClose={() => setToRestoreId(null)}
+                title="Restore"
+                content={
+                  <Typography variant="body1" color="textSecondary">
+                    Êtes-vous sûr de vouloir supprimer cet élément ? <br /> Cette action est
+                    irréversible.
+                  </Typography>
+                }
+                action={
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => {
+                      if (toRestoreId) {
+                        restoreOne(toRestoreId, { displayProgress: true, displaySuccess: true });
+                        setToRestoreId(null);
+                      }
+                    }}
+                  >
+                    Restore
                   </Button>
                 }
               />

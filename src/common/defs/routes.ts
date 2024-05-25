@@ -1,6 +1,7 @@
 import Auth from '@modules/auth/defs/routes';
 import Users from '@modules/users/defs/routes';
 import Events from '@modules/events/defs/routes';
+import MyEvents from '@modules/myevents/defs/routes';
 import Permissions from '@modules/permissions/defs/routes';
 
 const Common = {
@@ -14,6 +15,7 @@ const Routes = {
   Permissions,
   Users,
   Events,
+  MyEvents,
 };
 
 export default Routes;

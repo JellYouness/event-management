@@ -29,6 +29,8 @@ export interface CrudApiRoutes {
   ReadAll: string;
   ReadOne: string;
   UpdateOne: string;
+  CancelOne: string;
+  RestoreOne: string;
   DeleteOne: string;
   [key: string]: string;
 }
@@ -37,6 +39,7 @@ export enum CRUD_ACTION {
   CREATE = 'create',
   READ = 'read',
   UPDATE = 'update',
+  CANCEL = 'cancel',
   DELETE = 'delete',
 }
 
