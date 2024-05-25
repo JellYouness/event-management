@@ -14,7 +14,7 @@ import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import { pxToRem } from '@common/theme/typography';
 import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
-import AccountBoxRoundedIcon from '@mui/icons-material/AccountBoxRounded';
+import {AccountBoxRounded,Event} from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import Typography from '@mui/material/Typography';
 import useAuth from '@modules/auth/hooks/api/useAuth';
@@ -77,10 +77,19 @@ const Leftbar = (props: LeftbarProps) => {
       });
       pushCrudNavItem(
         {
-          icon: <AccountBoxRoundedIcon />,
+          icon: <AccountBoxRounded />,
           namespace: Namespaces.Users,
           routes: Routes.Users,
           labels: Labels.Users,
+        },
+        managementGroup
+      );
+      pushCrudNavItem(
+        {
+          icon: <Event />,
+          namespace: Namespaces.Events,
+          routes: Routes.Events,
+          labels: Labels.Events,
         },
         managementGroup
       );
@@ -262,10 +271,10 @@ const Leftbar = (props: LeftbarProps) => {
           sx={{
             position: 'absolute',
             display: 'flex',
-            top: 6,
+            top: 15,
             left: {
               xs: 6,
-              sm: 14,
+              sm: 18,
             },
           }}
         >

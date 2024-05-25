@@ -18,6 +18,8 @@ export interface UseItemsHook<Item, CreateOneInput, UpdateOneInput> {
     _input: UpdateOneInput,
     options?: FetchApiOptions
   ) => Promise<ItemResponse<Item>>;
+  cancelOne: (id: Id, options?: FetchApiOptions) => Promise<ItemResponse<Item>>;
+  restoreOne: (id: Id, options?: FetchApiOptions) => Promise<ItemResponse<Item>>;
   deleteOne: (id: Id, options?: FetchApiOptions) => Promise<ItemResponse<Item>>;
   mutate: KeyedMutator<Item[] | null>;
 }
@@ -103,6 +105,38 @@ const useItems = <Item, CreateOneInput, UpdateOneInput>(
     return response;
   };
 
+  const cancelOne = async (id: Id, options?: FetchApiOptions) => {
+    const response = await fetchApi<ItemData<Item>>(
+      apiRoutes.CancelOne.replace('{id}', id.toString()),
+      {
+        method: 'PUT',
+        ...options,
+      }
+    );
+
+    if (response.success) {
+      mutate();
+    }
+
+    return response;
+  };
+
+  const restoreOne = async (id: Id, options?: FetchApiOptions) => {
+    const response = await fetchApi<ItemData<Item>>(
+      apiRoutes.RestoreOne.replace('{id}', id.toString()),
+      {
+        method: 'PUT',
+        ...options,
+      }
+    );
+
+    if (response.success) {
+      mutate();
+    }
+
+    return response;
+  };
+
   const deleteOne = async (id: Id, options?: FetchApiOptions) => {
     const response = await fetchApi<ItemData<Item>>(
       apiRoutes.DeleteOne.replace('{id}', id.toString()),
@@ -125,6 +159,8 @@ const useItems = <Item, CreateOneInput, UpdateOneInput>(
     readOne,
     readAll,
     updateOne,
+    cancelOne,
+    restoreOne,
     deleteOne,
     mutate,
   };

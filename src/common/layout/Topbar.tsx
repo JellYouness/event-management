@@ -45,23 +45,19 @@ const Topbar = () => {
   };
   const navItems: TopbarItem[] = [
     {
-      label: 'Accueil',
+      label: 'Home',
       link: Routes.Common.Home,
       onClick: () => router.push(Routes.Common.Home),
     },
     {
-      label: 'Langues',
-      dropdown: [
-        {
-          label: 'Français',
-        },
-        {
-          label: 'Anglais',
-        },
-        {
-          label: 'Espagnol',
-        },
-      ],
+      label: 'Explore Events',
+      link: Routes.Common.Home,
+      //onClick: () => router.push(Routes.Common.Home),
+    },
+    {
+      label: 'My Events',
+      link: Routes.Common.Home,
+      //onClick: () => router.push(Routes.Common.Home),
     },
   ];
 
@@ -216,7 +212,7 @@ const Topbar = () => {
                       }),
                     }}
                   >
-                    Connexion
+                    Login
                   </StyledListItemButton>
                 </ListItem>
                 <ListItem
@@ -243,7 +239,7 @@ const Topbar = () => {
                       },
                     }}
                   >
-                    Inscription
+                    Sign Up
                   </Button>
                 </ListItem>
               </>
@@ -255,7 +251,7 @@ const Topbar = () => {
                     display: { xs: 'none', md: 'flex' },
                   }}
                 >
-                  Se déconnecter
+                  Log Out
                 </Button>
               </>
             )}

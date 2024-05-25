@@ -86,7 +86,7 @@ const RHFImageDropzone = ({ name, label, helperText, ...other }: Props) => {
             }}
             {...other}
             type="file"
-            accept="image/svg+xml"
+            accept="image"
             ref={fileInputRef}
             style={{ display: 'none' }}
           />

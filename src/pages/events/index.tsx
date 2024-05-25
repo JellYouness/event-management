@@ -2,7 +2,7 @@ import withAuth, { AUTH_MODE } from '@modules/auth/hocs/withAuth';
 import withPermissions from '@modules/permissions/hocs/withPermissions';
 import { NextPage } from 'next';
 import Routes from '@common/defs/routes';
-import UsersTable from '@modules/users/components/partials/UsersTable';
+import EventsTable from '@modules/events/components/partials/EventsTable';
 import CustomBreadcrumbs from '@common/components/lib/navigation/CustomBreadCrumbs';
 import { useRouter } from 'next/router';
 import { Add } from '@mui/icons-material';
@@ -11,16 +11,16 @@ import { CRUD_ACTION } from '@common/defs/types';
 import Namespaces from '@common/defs/namespaces';
 import Labels from '@common/defs/labels';
 
-const UsersPage: NextPage = () => {
+const EventsPage: NextPage = () => {
   const router = useRouter();
   return (
     <>
       <PageHeader
-        title={Labels.Users.ReadAll}
+        title={Labels.Events.ReadAll}
         action={{
-          label: Labels.Users.NewOne,
+          label: Labels.Events.NewOne,
           startIcon: <Add />,
-          onClick: () => router.push(Routes.Users.CreateOne),
+          onClick: () => router.push(Routes.Events.CreateOne),
           permission: {
             entity: Namespaces.Users,
             action: CRUD_ACTION.CREATE,
@@ -28,15 +28,15 @@ const UsersPage: NextPage = () => {
         }}
       />
       <CustomBreadcrumbs
-        links={[{ name: 'Dashboard', href: Routes.Common.Home }, { name: Labels.Users.Items }]}
+        links={[{ name: 'Dashboard', href: Routes.Common.Home }, { name: Labels.Events.Items }]}
       />
-      <UsersTable />
+      <EventsTable />
     </>
   );
 };
 
 export default withAuth(
-  withPermissions(UsersPage, {
+  withPermissions(EventsPage, {
     requiredPermissions: [
       {
         entity: Namespaces.Users,

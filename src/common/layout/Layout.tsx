@@ -1,11 +1,14 @@
 import React, { useState } from 'react';
 import Head from 'next/head';
 import Footer from './Footer';
-import { LEFTBAR_WIDTH } from './Leftbar';
+import Leftbar, { LEFTBAR_WIDTH } from './Leftbar';
 import Topbar from './Topbar';
 import Box from '@mui/material/Box';
 import { Container, useTheme } from '@mui/material';
 import Stack from '@mui/material/Stack';
+import { CRUD_ACTION } from '@common/defs/types';
+import Namespaces from '@common/defs/namespaces';
+import usePermissions from '@modules/permissions/hooks/usePermissions';
 
 interface ILayoutProps {
   children: React.ReactNode;
@@ -15,7 +18,13 @@ const Layout = (props: ILayoutProps) => {
   const { children } = props;
   const theme = useTheme();
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [openLeftbar, setOpenLeftbar] = useState(false);
+  const [openLeftbar, setOpenLeftbar] = useState(true);
+  //Persmission
+  const { can } = usePermissions();
+  const permission= {
+    entity: Namespaces.Users,
+    action: CRUD_ACTION.CREATE,
+  };
   return (
     <div>
       <Head>
@@ -29,7 +38,15 @@ const Layout = (props: ILayoutProps) => {
       >
         <Box sx={{ minHeight: '100vh', width: '100vw' }}>
           <Stack direction="column" sx={{ height: '100%' }}>
-            {/* <Leftbar open={openLeftbar} onToggle={(open) => setOpenLeftbar(open)} /> */}
+            {can(permission.entity, permission.action) && (
+              <Leftbar
+                open={openLeftbar}
+                onToggle={(open: boolean | ((prevState: boolean) => boolean)) =>
+                  setOpenLeftbar(open)
+                }
+              />
+            )}
+
             <Topbar />
             <Box
               sx={{
