@@ -4,13 +4,11 @@ import withAuth, { AUTH_MODE } from '@modules/auth/hocs/withAuth';
 import MyEventsTable from '@modules/myevents/components/partials/MyEventsTable';
 import { NextPage } from 'next';
 import Link from 'next/link';
-import FilterToolbar from 'src/pages/Filter';
 
 const Index: NextPage = () => {
   return (
     <>
       <PageHeader title="Dashboard" />
-      <FilterToolbar />
       <MyEventsTable />
     </>
   );
