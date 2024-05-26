@@ -13,7 +13,7 @@ import * as Yup from 'yup';
 import RHFDatePicker from '@common/components/lib/react-hook-form/RHFDatePicker';
 import RHFImageDropzone from '@common/components/lib/react-hook-form/RHFImageDropzone';
 import { Label } from '@mui/icons-material';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 
 interface CreateEventFormProps {}
 
@@ -29,8 +29,9 @@ const CreateEventForm = (_props: CreateEventFormProps) => {
   });
   const defaultValues: CreateOneInput = {
     name: '',
-    date: new Date(), 
-    //date: new Dayjs().toDate(), 
+    // @ts-ignore
+    date: dayjs(new Date()),
+    //date: Dayjs().toDate(),
     location: '',
     description: '',
     maxParticipants: 0,

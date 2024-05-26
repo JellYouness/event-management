@@ -19,7 +19,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "editor.formatOnPaste": true,
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "eslint.validate": ["typescript", "typescriptreact"],
   "editor.tabSize": 2,
   "javascript.updateImportsOnFileMove.enabled": "always",
