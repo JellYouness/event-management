@@ -1,5 +1,5 @@
 import { useFormContext, Controller } from 'react-hook-form';
-import { DatePicker, DatePickerProps } from '@mui/x-date-pickers/DatePicker';
+import { DateTimePicker, DateTimePickerProps } from '@mui/x-date-pickers/DateTimePicker';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { FormControl, FormHelperText } from '@mui/material';
@@ -7,7 +7,7 @@ import 'dayjs/locale/fr';
 import { Dayjs } from 'dayjs';
 import { frFR } from '@mui/x-date-pickers';
 
-type Props = DatePickerProps<Dayjs> & {
+type Props = DateTimePickerProps<Dayjs> & {
   name: string;
   helperText?: string;
 };
@@ -31,7 +31,7 @@ const RHFDatePicker = ({ name, helperText, ...other }: Props) => {
           localeText={frenchLocale}
         >
           <FormControl fullWidth error={!!error} color="error">
-            <DatePicker
+            <DateTimePicker
               {...field}
               value={field.value ? field.value : null}
               onChange={(date) => field.onChange(date)}
