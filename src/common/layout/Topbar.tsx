@@ -50,9 +50,9 @@ const Topbar = () => {
       onClick: () => router.push(Routes.Common.Home),
     },
     {
-      label: 'Explore Events',
-      link: Routes.Common.Home,
-      //onClick: () => router.push(Routes.Common.Home),
+      label: 'Registred Events',
+      link: Routes.Events.Registered,
+      onClick: () => router.push(Routes.Events.Registered),
     },
     {
       label: 'My Events',

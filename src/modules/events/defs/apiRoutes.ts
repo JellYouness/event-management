@@ -5,6 +5,8 @@ const ApiRoutes: CrudApiRoutes = {
   CreateOne: prefix,
   ReadAll: prefix,
   ReadOne: prefix + '/{id}',
+  ReadRegistred: prefix + '/registered/{id}',
+  ReadOwn: prefix + '/myevents/{id}',
   UpdateOne: prefix + '/{id}',
   CancelOne: prefix + '/cancel/{id}',
   RestoreOne: prefix + '/restore/{id}',

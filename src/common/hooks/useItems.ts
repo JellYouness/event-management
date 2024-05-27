@@ -14,6 +14,8 @@ export interface UseItemsHook<Item, CreateOneInput, UpdateOneInput> {
   createOne: (_input: CreateOneInput, options?: FetchApiOptions) => Promise<ItemResponse<Item>>;
   readOne: (id: Id, options?: FetchApiOptions) => Promise<ItemResponse<Item>>;
   readAll: (options?: FetchApiOptions) => Promise<ItemsResponse<Item>>;
+  readOwn: (id: Id, options?: FetchApiOptions) => Promise<ItemsResponse<Item>>;
+  readRegistred: (id: Id, options?: FetchApiOptions) => Promise<ItemsResponse<Item>>;
   updateOne: (
     id: Id,
     _input: UpdateOneInput,
@@ -28,9 +30,13 @@ export interface UseItemsHook<Item, CreateOneInput, UpdateOneInput> {
 
 export interface UseItemsOptions {
   fetchItems?: boolean;
+  fetchOwnItems?: boolean;
+  fetchRegistredItems?: boolean;
 }
 export const defaultOptions = {
   fetchItems: false,
+  fetchOwnItems: false,
+  fetchRegistredItems: false,
 };
 
 export type UseItems<Item, CreateOneInput = Any, UpdateOneInput = Any> = (
@@ -42,11 +48,27 @@ const useItems = <Item, CreateOneInput, UpdateOneInput>(
   opts: UseItemsOptions = defaultOptions
 ): UseItemsHook<Item, CreateOneInput, UpdateOneInput> => {
   const fetchApi = useApi();
+  const { user } = useAuth();
+  const id = user?.id ?? 0;
 
+  const mode = opts.fetchItems
+    ? apiRoutes.ReadAll
+    : null || opts.fetchOwnItems
+    ? apiRoutes.ReadOwn.replace('{id}', id.toString())
+    : null || opts.fetchRegistredItems
+    ? apiRoutes.ReadRegistred.replace('{id}', id.toString())
+        : null;
+  
+  const read = () => {
+    if (opts.fetchOwnItems) return readOwn(id);
+    if (opts.fetchRegistredItems) return readRegistred(id);
+    return readAll();
+  }
+  
   const { data, mutate } = useSWRImmutable<Item[] | null>(
-    opts.fetchItems ? apiRoutes.ReadAll : null,
+    mode,
     async (_url: string) => {
-      const response = await readAll();
+      const response = await read();
       return response.data?.items ?? null;
     }
   );
@@ -86,6 +108,24 @@ const useItems = <Item, CreateOneInput, UpdateOneInput>(
     if (response.success) {
       setItems(response.data?.items ?? null);
     }
+
+    return response;
+  };
+
+  const readOwn = async (id: Id, options?: FetchApiOptions) => {
+    const response = await fetchApi<ItemsData<Item>>(
+      apiRoutes.ReadOwn.replace('{id}', id.toString()),
+      options
+    );
+
+    return response;
+  };
+
+  const readRegistred = async (id: Id, options?: FetchApiOptions) => {
+    const response = await fetchApi<ItemsData<Item>>(
+      apiRoutes.ReadRegistred.replace('{id}', id.toString()),
+      options
+    );
 
     return response;
   };
@@ -139,13 +179,12 @@ const useItems = <Item, CreateOneInput, UpdateOneInput>(
     return response;
   };
 
-  const registerOne = async (id: Id,input:any, options?: FetchApiOptions) => {
+  const registerOne = async (id: Id, input: any, options?: FetchApiOptions) => {
     const response = await fetchApi<ItemData<Item>>(
       apiRoutes.RegisterOne.replace('{id}', id.toString()),
       {
         method: 'POST',
         body: input,
-
         ...options,
       }
     );
@@ -178,6 +217,8 @@ const useItems = <Item, CreateOneInput, UpdateOneInput>(
     createOne,
     readOne,
     readAll,
+    readOwn,
+    readRegistred,
     updateOne,
     cancelOne,
     restoreOne,

@@ -11,7 +11,7 @@ const Index: NextPage = () => {
   return (
     <>
       <PageHeader title="Dashboard" />
-      <MyEventsTable filterToolbar />
+      <MyEventsTable filterToolbar fetchItems />
     </>
   );
 };

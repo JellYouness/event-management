@@ -28,28 +28,37 @@ interface ItemsCardsProps<Item, CreateOneInput, UpdateOneInput, Row> {
   routes: CrudRoutes;
   useItems: UseItems<Item, CreateOneInput, UpdateOneInput>;
   itemToRow: (item: Item) => Row;
+  fetchItems?: boolean;
   ownItems?: boolean;
+  registredtems?: boolean;
   filterToolbar?: boolean;
 }
 
 const ItemsCards = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
   props: ItemsCardsProps<Item, CreateOneInput, UpdateOneInput, Row>
 ) => {
-  const { namespace, routes, useItems, itemToRow, ownItems, filterToolbar } = props;
+  const {
+    namespace,
+    routes,
+    useItems,
+    itemToRow,
+    fetchItems,
+    ownItems,
+    registredtems,
+    filterToolbar,
+  } = props;
   const filterItems = useFilter();
   const router = useRouter();
-  const { user } = useAuth();
-  const { items, registerOne } = useItems({ fetchItems: true });
+  const { items } = useItems({
+    fetchItems: fetchItems,
+    fetchOwnItems: ownItems,
+    fetchRegistredItems: registredtems,
+  });
   const { can, canNot } = usePermissions();
   const [rows, setRows] = useState<Row[]>([]);
 
   useEffect(() => {
-    if (ownItems && user) {
-      const items: Item[] | [] = user.events;
-      const itemsRows = items?.map((item) => itemToRow(item));
-      setRows(itemsRows);
-    }
-    if (items && !ownItems) {
+    if (items) {
       const itemsRows = items.map((item) => itemToRow(item));
       setRows(itemsRows);
     }
@@ -171,7 +180,7 @@ const ItemsCards = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                         <EventSeat />
                         <Typography variant="body1"> 50/{item.maxParticipants}</Typography>
                       </Stack>
-                      {!ownItems && (
+                      {!ownItems && !registredtems && (
                         <Button
                           startIcon={<LocationOn />}
                           variant="contained"

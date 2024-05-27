@@ -50,4 +50,5 @@ export interface CrudLabels {
   ReadAll: string;
   Items: string;
   EditOne: string;
+  Registered: string;
 }

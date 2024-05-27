@@ -1,25 +1,8 @@
 import Routes from '@common/defs/routes';
-import ItemsTable from '@common/components/partials/ItemsTable';
 import useEvents, { CreateOneInput, UpdateOneInput } from '@modules/events/hooks/api/useEvents';
-import { GridColumns } from '@mui/x-data-grid';
-import dayjs from 'dayjs';
 import Namespaces from '@common/defs/namespaces';
 import { CrudRow } from '@common/defs/types';
 import { Event } from '@modules/events/defs/types';
-import { AccessTime, EventSeat, FiberManualRecord, LocationOn } from '@mui/icons-material';
-import {
-  Badge,
-  Box,
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-  Grid,
-  Stack,
-  Typography,
-} from '@mui/material';
-import Image from 'next/image';
 import ItemsCards from '@common/components/partials/ItemsCards';
 
 export interface Row extends CrudRow {
@@ -32,12 +15,14 @@ export interface Row extends CrudRow {
 }
 
 interface MyEventsTableProps {
+  fetchItems?: boolean;
   ownItems?: boolean;
+  registredtems?: boolean;
   filterToolbar?: boolean;
 }
 
 const MyEventsTable = (props: MyEventsTableProps) => {
-  const { ownItems, filterToolbar } = props;
+  const {fetchItems, ownItems, filterToolbar, registredtems } = props;
   const itemToRow = (item: Event): Row => {
     return {
       id: item.id,
@@ -57,7 +42,9 @@ const MyEventsTable = (props: MyEventsTableProps) => {
         routes={Routes.Events}
         useItems={useEvents}
         itemToRow={itemToRow}
+        fetchItems={fetchItems}
         ownItems={ownItems}
+        registredtems={registredtems}
         filterToolbar={filterToolbar}
       />
     </>
