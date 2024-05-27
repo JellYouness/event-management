@@ -23,6 +23,11 @@ const UsersTable = () => {
       width: 100,
     },
     {
+      field: 'name',
+      headerName: 'Name',
+      flex: 1,
+    },
+    {
       field: 'email',
       headerName: 'Email',
       flex: 1,
@@ -53,6 +58,7 @@ const UsersTable = () => {
   const itemToRow = (item: User): Row => {
     return {
       id: item.id,
+      name: item.name,
       email: item.email,
       createdAt: item.createdAt,
       roles: item.rolesNames,

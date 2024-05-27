@@ -8,6 +8,7 @@ const ApiRoutes: CrudApiRoutes = {
   UpdateOne: prefix + '/{id}',
   CancelOne: prefix + '/cancel/{id}',
   RestoreOne: prefix + '/restore/{id}',
+  RegisterOne: prefix + '/register/{id}',
   DeleteOne: prefix + '/{id}',
 };
 

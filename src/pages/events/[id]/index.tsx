@@ -7,24 +7,25 @@ import PageHeader from '@common/components/lib/partials/PageHeader';
 import CustomBreadcrumbs from '@common/components/lib/navigation/CustomBreadCrumbs';
 import { useEffect, useState } from 'react';
 import useProgressBar from '@common/hooks/useProgressBar';
-import { User } from '@modules/users/defs/types';
-import useUsers from '@modules/users/hooks/api/useUsers';
 import { CRUD_ACTION, Id } from '@common/defs/types';
 import Namespaces from '@common/defs/namespaces';
 import Labels from '@common/defs/labels';
-import UpdateUserForm from '@modules/users/components/partials/UpdateUserForm';
 import { Button, Card, CardActions, CardContent, Grid, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
 import { AccessTime, Add, EventSeat, LocationOn } from '@mui/icons-material';
 import dayjs from 'dayjs';
+import useEvents from '@modules/events/hooks/api/useEvents';
+import { Event } from '@modules/events/defs/types';
+import useAuth from '@modules/auth/hooks/api/useAuth';
 
 const EventPage: NextPage = () => {
   const router = useRouter();
   const { start, stop } = useProgressBar();
-  const { readOne } = useUsers();
+  const { readOne, registerOne } = useEvents();
   const [loaded, setLoaded] = useState(false);
-  const [item, setItem] = useState<null | User>(null);
+  const [item, setItem] = useState<null | Event>(null);
   const id: Id = Number(router.query.id);
+  const { user } = useAuth();
 
   useEffect(() => {
     if (loaded) {
@@ -110,7 +111,16 @@ const EventPage: NextPage = () => {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button variant="contained" color="primary">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() =>
+              registerOne(id, { userId: user?.id } as any, {
+                displayProgress: true,
+                displaySuccess: true,
+              })
+            }
+          >
             Register
           </Button>
           <Button variant="contained" color="info">

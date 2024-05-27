@@ -31,6 +31,7 @@ export interface CrudApiRoutes {
   UpdateOne: string;
   CancelOne: string;
   RestoreOne: string;
+  RegisterOne: string;
   DeleteOne: string;
   [key: string]: string;
 }

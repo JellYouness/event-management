@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import useSWRImmutable, { KeyedMutator } from 'swr';
 import useApi, { ApiResponse, FetchApiOptions } from '@common/hooks/useApi';
 import { Any, CrudApiRoutes, Id } from '@common/defs/types';
+import useAuth from '@modules/auth/hooks/api/useAuth';
 
 export type ItemsData<Item> = { items: Item[] };
 export type ItemData<Item> = { item: Item };
@@ -20,6 +21,7 @@ export interface UseItemsHook<Item, CreateOneInput, UpdateOneInput> {
   ) => Promise<ItemResponse<Item>>;
   cancelOne: (id: Id, options?: FetchApiOptions) => Promise<ItemResponse<Item>>;
   restoreOne: (id: Id, options?: FetchApiOptions) => Promise<ItemResponse<Item>>;
+  registerOne: (id: Id, input: any, options?: FetchApiOptions) => Promise<ItemResponse<Item>>;
   deleteOne: (id: Id, options?: FetchApiOptions) => Promise<ItemResponse<Item>>;
   mutate: KeyedMutator<Item[] | null>;
 }
@@ -137,6 +139,24 @@ const useItems = <Item, CreateOneInput, UpdateOneInput>(
     return response;
   };
 
+  const registerOne = async (id: Id,input:any, options?: FetchApiOptions) => {
+    const response = await fetchApi<ItemData<Item>>(
+      apiRoutes.RegisterOne.replace('{id}', id.toString()),
+      {
+        method: 'POST',
+        body: input,
+
+        ...options,
+      }
+    );
+
+    if (response.success) {
+      mutate();
+    }
+
+    return response;
+  };
+
   const deleteOne = async (id: Id, options?: FetchApiOptions) => {
     const response = await fetchApi<ItemData<Item>>(
       apiRoutes.DeleteOne.replace('{id}', id.toString()),
@@ -161,6 +181,7 @@ const useItems = <Item, CreateOneInput, UpdateOneInput>(
     updateOne,
     cancelOne,
     restoreOne,
+    registerOne,
     deleteOne,
     mutate,
   };

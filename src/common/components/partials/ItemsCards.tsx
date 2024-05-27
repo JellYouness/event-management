@@ -39,7 +39,7 @@ const ItemsCards = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
   const filterItems = useFilter();
   const router = useRouter();
   const { user } = useAuth();
-  const { items } = useItems({ fetchItems: true });
+  const { items, registerOne } = useItems({ fetchItems: true });
   const { can, canNot } = usePermissions();
   const [rows, setRows] = useState<Row[]>([]);
 
