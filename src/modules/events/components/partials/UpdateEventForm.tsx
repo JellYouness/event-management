@@ -2,43 +2,46 @@ import { RHFSwitch, RHFTextField } from '@common/components/lib/react-hook-form'
 import RHFImageDropzone from '@common/components/lib/react-hook-form/RHFImageDropzone';
 import UpdateCrudItemForm from '@common/components/partials/UpdateCrudItemForm';
 import Routes from '@common/defs/routes';
+import { Event } from '@modules/events/defs/types';
 import { ROLES_OPTIONS } from '@modules/permissions/defs/options';
 import { ROLE } from '@modules/permissions/defs/types';
 import { User } from '@modules/users/defs/types';
-import useUsers, { UpdateOneInput } from '@modules/users/hooks/api/useUsers';
+import useEvents, { UpdateOneInput } from '@modules/events/hooks/api/useEvents';
 import { Grid, MenuItem } from '@mui/material';
 import * as Yup from 'yup';
+import dayjs from 'dayjs';
 
-interface UpdateUserFormProps {
-  item: User;
+interface UpdateEventFormProps {
+  item: Event;
 }
 
-const UpdateUserForm = (props: UpdateUserFormProps) => {
+const UpdateEventForm = (props: UpdateEventFormProps) => {
   const { item } = props;
   const schema = Yup.object().shape({
-    email: Yup.string()
-      .email("Le format de l'email est incorrect")
-      .required('Le champ est obligatoire'),
-    password: Yup.string(),
-    role: Yup.mixed<ROLE>()
-      .oneOf(Object.values(ROLE), (_values) => {
-        return `Le champ doit avoir l'une des valeurs suivantes : ${ROLES_OPTIONS.map(
-          (option) => option.label
-        ).join(', ')}`;
-      })
-      .required('Le champ est obligatoire'),
+    name: Yup.string().required('Le champ est obligatoire'),
+    date: Yup.date().required('Le champ est obligatoire'),
+    location: Yup.string().required('Le champ est obligatoire'),
+    description: Yup.string().required('Le champ est obligatoire'),
+    maxParticipants: Yup.number().positive().required('Le champ est obligatoire'),
+    image: Yup.string(),
   });
   const defaultValues: UpdateOneInput = {
-    email: item.email,
-    password: '',
-    role: item.rolesNames[0],
+    name: item.name,
+    // @ts-ignore
+    date: dayjs(item.date).format('YYYY-MM-DD hh:mm'),
+    //date: Dayjs().toDate(),
+    location: item.location,
+    description: item.description,
+    maxParticipants: item.maxParticipants,
+    image: item.image,
+    isCanceled: item.isCanceled,
   };
   return (
     <>
-      <UpdateCrudItemForm<User, UpdateOneInput>
+      <UpdateCrudItemForm<Event, UpdateOneInput>
         item={item}
-        routes={Routes.Users}
-        useItems={useUsers}
+        routes={Routes.Events}
+        useItems={useEvents}
         schema={schema}
         defaultValues={defaultValues}
       >
@@ -67,7 +70,7 @@ const UpdateUserForm = (props: UpdateUserFormProps) => {
             <RHFImageDropzone name="image" label="Image" />
           </Grid>
           <Grid item xs={12}>
-            <RHFSwitch name="canceled" label="Canceled" />
+            <RHFSwitch name="isCanceled" label="Canceled" />
           </Grid>
         </Grid>
       </UpdateCrudItemForm>
@@ -75,4 +78,4 @@ const UpdateUserForm = (props: UpdateUserFormProps) => {
   );
 };
 
-export default UpdateUserForm;
+export default UpdateEventForm;

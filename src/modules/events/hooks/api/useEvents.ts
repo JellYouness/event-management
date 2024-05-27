@@ -18,6 +18,7 @@ export interface UpdateOneInput {
   image: string;
   description: string;
   maxParticipants: number;
+  isCanceled: boolean;
 }
 
 export type UpsertOneInput = CreateOneInput | UpdateOneInput;

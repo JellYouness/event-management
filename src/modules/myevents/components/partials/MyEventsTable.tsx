@@ -22,7 +22,7 @@ import {
 import Image from 'next/image';
 import ItemsCards from '@common/components/partials/ItemsCards';
 
-interface Row extends CrudRow {
+export interface Row extends CrudRow {
   name: string;
   date: Date;
   location: string;
@@ -31,8 +31,13 @@ interface Row extends CrudRow {
   maxParticipants: number;
 }
 
-const MyEventsTable = () => {
+interface MyEventsTableProps {
+  ownItems?: boolean;
+  filterToolbar?: boolean;
+}
 
+const MyEventsTable = (props: MyEventsTableProps) => {
+  const { ownItems, filterToolbar } = props;
   const itemToRow = (item: Event): Row => {
     return {
       id: item.id,
@@ -52,6 +57,8 @@ const MyEventsTable = () => {
         routes={Routes.Events}
         useItems={useEvents}
         itemToRow={itemToRow}
+        ownItems={ownItems}
+        filterToolbar={filterToolbar}
       />
     </>
   );

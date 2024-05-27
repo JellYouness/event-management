@@ -7,19 +7,20 @@ import PageHeader from '@common/components/lib/partials/PageHeader';
 import CustomBreadcrumbs from '@common/components/lib/navigation/CustomBreadCrumbs';
 import { useEffect, useState } from 'react';
 import useProgressBar from '@common/hooks/useProgressBar';
-import { User } from '@modules/users/defs/types';
 import useUsers from '@modules/users/hooks/api/useUsers';
 import { CRUD_ACTION, Id } from '@common/defs/types';
 import Namespaces from '@common/defs/namespaces';
 import Labels from '@common/defs/labels';
-import UpdateUserForm from '@modules/users/components/partials/UpdateUserForm';
+import UpdateEventForm from '@modules/events/components/partials/UpdateEventForm';
+import { Event } from '@modules/events/defs/types';
+import useEvents from '@modules/events/hooks/api/useEvents';
 
-const UsersPage: NextPage = () => {
+const EditEventPage: NextPage = () => {
   const router = useRouter();
   const { start, stop } = useProgressBar();
-  const { readOne } = useUsers();
+  const { readOne } = useEvents();
   const [loaded, setLoaded] = useState(false);
-  const [item, setItem] = useState<null | User>(null);
+  const [item, setItem] = useState<null | Event>(null);
   const id: Id = Number(router.query.id);
 
   useEffect(() => {
@@ -57,13 +58,13 @@ const UsersPage: NextPage = () => {
         ]}
       />
 
-      {item && <UpdateUserForm item={item} />}
+      {item && <UpdateEventForm item={item} />}
     </>
   );
 };
 
 export default withAuth(
-  withPermissions(UsersPage, {
+  withPermissions(EditEventPage, {
     requiredPermissions: [
       {
         entity: Namespaces.Users,

@@ -6,10 +6,12 @@ import { NextPage } from 'next';
 import Link from 'next/link';
 
 const Index: NextPage = () => {
+
+
   return (
     <>
       <PageHeader title="Dashboard" />
-      <MyEventsTable />
+      <MyEventsTable filterToolbar />
     </>
   );
 };

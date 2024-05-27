@@ -30,7 +30,7 @@ const MyEventsPage: NextPage = () => {
       <CustomBreadcrumbs
         links={[{ name: 'Dashboard', href: Routes.Common.Home }, { name: Labels.MyEvents.Items }]}
       />
-      <MyEventsTable />
+      <MyEventsTable ownItems />
     </>
   );
 };

@@ -1,23 +1,10 @@
-import ConfirmDialog from '@common/components/lib/feedbacks/ConfirmDialog';
-import MenuPopover from '@common/components/lib/utils/MenuPopover/MenuPopover';
 import { CRUD_ACTION, CrudRoutes, CrudRow, Id } from '@common/defs/types';
 import usePermissions from '@modules/permissions/hooks/usePermissions';
 import { UseItems } from '@common/hooks/useItems';
+import { AccessTime, EventSeat, LocationOn } from '@mui/icons-material';
 import {
-  Cancel,
-  DeleteOutline,
-  Edit,
-  MoreVert,
-  AccessTime,
-  EventSeat,
-  FiberManualRecord,
-  LocationOn,
-} from '@mui/icons-material';
-import {
-  Box,
+  Paper,
   Button,
-  IconButton,
-  MenuItem,
   Card,
   CardActions,
   CardContent,
@@ -27,44 +14,78 @@ import {
   Grid,
   Badge,
 } from '@mui/material';
-import {
-  DataGrid,
-  frFR,
-  GridColumns,
-  GridToolbar,
-  GridEnrichedColDef,
-  GridSortModel,
-} from '@mui/x-data-grid';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import { Event } from '@modules/myevents/defs/types';
+import useAuth from '@modules/auth/hooks/api/useAuth';
+import useFilter from '@common/hooks/useFilter';
+import FilterToolbar from '@common/components/partials/FilterToolbar';
 
 interface ItemsCardsProps<Item, CreateOneInput, UpdateOneInput, Row> {
   namespace: string;
   routes: CrudRoutes;
   useItems: UseItems<Item, CreateOneInput, UpdateOneInput>;
   itemToRow: (item: Item) => Row;
+  ownItems?: boolean;
+  filterToolbar?: boolean;
 }
 
 const ItemsCards = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
   props: ItemsCardsProps<Item, CreateOneInput, UpdateOneInput, Row>
 ) => {
-  const { namespace, routes, useItems, itemToRow } = props;
+  const { namespace, routes, useItems, itemToRow, ownItems, filterToolbar } = props;
+  const filterItems = useFilter();
   const router = useRouter();
+  const { user } = useAuth();
   const { items } = useItems({ fetchItems: true });
   const { can, canNot } = usePermissions();
   const [rows, setRows] = useState<Row[]>([]);
+
   useEffect(() => {
-    if (items) {
+    if (ownItems && user) {
+      const items: Item[] | [] = user.events;
+      const itemsRows = items?.map((item) => itemToRow(item));
+      setRows(itemsRows);
+    }
+    if (items && !ownItems) {
       const itemsRows = items.map((item) => itemToRow(item));
       setRows(itemsRows);
     }
   }, [items]);
+
+  const filteredRows = rows.filter((item) => {
+    const matchesSearch = item.name.toLowerCase().includes(filterItems.search.toLowerCase());
+    const matchesDate = filterItems.date
+      ? dayjs(item.date).isSame(dayjs(filterItems.date), 'day')
+      : true;
+    const matchesLocation = item.location
+      .toLowerCase()
+      .includes(filterItems.location.toLowerCase());
+    const matchesEventStatus =
+      filterItems.eventStatus === 'all' ||
+      (filterItems.eventStatus === 'upcoming' && dayjs(item.date).isAfter(dayjs())) ||
+      (filterItems.eventStatus === 'past' && dayjs(item.date).isBefore(dayjs()));
+    const matchesActivityStatus =
+      filterItems.activityStatus === 'all' ||
+      (filterItems.activityStatus === 'active' && !item.isCanceled) ||
+      (filterItems.activityStatus === 'canceled' && item.isCanceled);
+    const matchesNotFull = !filterItems.notFull || item.participants < item.maxParticipants;
+
+    return (
+      matchesSearch &&
+      matchesDate &&
+      matchesLocation &&
+      matchesEventStatus &&
+      matchesActivityStatus &&
+      matchesNotFull
+    );
+  });
   return (
     <>
-      <Box sx={{ height: 550 }}>
+      <Paper sx={{ minHeight: 550, px: 2 }}>
+        {filterToolbar && <FilterToolbar filterItems={filterItems} />}
         {!items ? (
           <>
             <Grid container spacing={4} marginTop={6}>
@@ -78,15 +99,15 @@ const ItemsCards = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
         ) : (
           <>
             <Grid container spacing={4} marginTop={2}>
-              {rows.map((item) => (
+              {filteredRows.map((item) => (
                 <Grid item xs={12} sm={6} md={3}>
                   <Card
-                    onClick={() => router.push('/events')}
+                    onClick={() => router.push(`/events/${item.id}`)}
                     sx={{
                       cursor: 'pointer',
                       '&:hover': {
-                        scale: '103%',
-                        transition: 'all .5s',
+                        scale: '101%',
+                        transition: 'all .2s',
                       },
                     }}
                   >
@@ -150,13 +171,15 @@ const ItemsCards = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                         <EventSeat />
                         <Typography variant="body1"> 50/{item.maxParticipants}</Typography>
                       </Stack>
-                      <Button
-                        startIcon={<LocationOn />}
-                        variant="contained"
-                        disabled={item.isCanceled}
-                      >
-                        Register
-                      </Button>
+                      {!ownItems && (
+                        <Button
+                          startIcon={<LocationOn />}
+                          variant="contained"
+                          disabled={item.isCanceled}
+                        >
+                          Register
+                        </Button>
+                      )}
                     </CardActions>
                   </Card>
                 </Grid>
@@ -164,7 +187,7 @@ const ItemsCards = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
             </Grid>
           </>
         )}
-      </Box>
+      </Paper>
     </>
   );
 };
