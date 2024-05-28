@@ -67,7 +67,7 @@ export default withAuth(
   withPermissions(EditEventPage, {
     requiredPermissions: [
       {
-        entity: Namespaces.Users,
+        entity: Namespaces.Events,
         action: CRUD_ACTION.UPDATE,
       },
     ],

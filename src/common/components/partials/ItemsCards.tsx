@@ -13,6 +13,7 @@ import {
   Skeleton,
   Grid,
   Badge,
+  Chip,
 } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
@@ -55,6 +56,7 @@ const ItemsCards = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
     fetchRegistredItems: registredtems,
   });
   const { can, canNot } = usePermissions();
+  const { user } = useAuth();
   const [rows, setRows] = useState<Row[]>([]);
 
   useEffect(() => {
@@ -180,15 +182,19 @@ const ItemsCards = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                         <EventSeat />
                         <Typography variant="body1"> 50/{item.maxParticipants}</Typography>
                       </Stack>
-                      {!ownItems && !registredtems && (
-                        <Button
-                          startIcon={<LocationOn />}
-                          variant="contained"
-                          disabled={item.isCanceled}
-                        >
-                          Register
-                        </Button>
-                      )}
+                      {!ownItems &&
+                        !registredtems &&
+                        (item.userId === user?.id ? (
+                          <Chip variant="outlined" label="Your Event" color="info" />
+                        ) : (
+                          <Button
+                            startIcon={<LocationOn />}
+                            variant="contained"
+                            disabled={item.isCanceled}
+                          >
+                            Register
+                          </Button>
+                        ))}
                     </CardActions>
                   </Card>
                 </Grid>

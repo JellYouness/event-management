@@ -30,7 +30,7 @@ export default withAuth(
   withPermissions(RegistredEventsPage, {
     requiredPermissions: [
       {
-        entity: Namespaces.Users,
+        entity: Namespaces.Events,
         action: CRUD_ACTION.READ,
       },
     ],

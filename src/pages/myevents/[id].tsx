@@ -66,8 +66,8 @@ export default withAuth(
   withPermissions(UsersPage, {
     requiredPermissions: [
       {
-        entity: Namespaces.Users,
-        action: CRUD_ACTION.UPDATE,
+        entity: Namespaces.Events,
+        action: CRUD_ACTION.READ,
       },
     ],
     redirectUrl: Routes.Permissions.Forbidden,

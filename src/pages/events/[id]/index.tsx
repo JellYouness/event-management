@@ -54,22 +54,23 @@ const EventPage: NextPage = () => {
   return (
     <>
       <PageHeader
-        title={Labels.Users.EditOne}
+        title={Labels.Events.ReadAll}
         action={{
           label: Labels.Events.EditOne,
           startIcon: <Add />,
           onClick: () => router.push(Routes.Events.CreateOne),
           permission: {
-            entity: Namespaces.Users,
-            action: CRUD_ACTION.CREATE,
+            entity: Namespaces.Events,
+            action: CRUD_ACTION.UPDATE,
+            entityId: item?.id
           },
         }}
       />
       <CustomBreadcrumbs
         links={[
           { name: 'Dashboard', href: Routes.Common.Home },
-          { name: Labels.Users.Items, href: Routes.Users.ReadAll },
-          { name: item ? item.email : Labels.Users.EditOne },
+          { name: Labels.Events.Items, href: Routes.MyEvents.ReadAll },
+          { name: item ? item.name : Labels.Users.EditOne },
         ]}
       />
       <Card>
@@ -137,8 +138,8 @@ export default withAuth(
   withPermissions(EventPage, {
     requiredPermissions: [
       {
-        entity: Namespaces.Users,
-        action: CRUD_ACTION.UPDATE,
+        entity: Namespaces.Events,
+        action: CRUD_ACTION.READ,
       },
     ],
     redirectUrl: Routes.Permissions.Forbidden,

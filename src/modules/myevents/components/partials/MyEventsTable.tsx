@@ -12,6 +12,7 @@ export interface Row extends CrudRow {
   isCanceled: boolean;
   image: string;
   maxParticipants: number;
+  userId: number;
 }
 
 interface MyEventsTableProps {
@@ -32,6 +33,7 @@ const MyEventsTable = (props: MyEventsTableProps) => {
       isCanceled: item.isCanceled,
       image: item.image,
       maxParticipants: item.maxParticipants,
+      userId: item.userId,
     };
   };
 
