@@ -12,8 +12,12 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Menu,
+  MenuItem,
   Toolbar,
+  Typography,
   styled,
+  useTheme,
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import { useRouter } from 'next/router';
@@ -21,7 +25,7 @@ import { useState } from 'react';
 import useAuth from '@modules/auth/hooks/api/useAuth';
 import Stack from '@mui/material/Stack';
 import Logo from '@common/assets/svgs/Logo';
-import { ArrowForwardIos } from '@mui/icons-material';
+import { AccountCircle, ArrowForwardIos } from '@mui/icons-material';
 
 interface TopbarItem {
   label: string;
@@ -33,11 +37,15 @@ interface TopbarItem {
   }>;
 }
 
-const Topbar = () => {
+const Topbar = ({ sx }: any) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const openProfile = Boolean(anchorEl);
+
   const { user, logout } = useAuth();
+  const theme = useTheme();
 
   const dropdownWidth = 137;
   const toggleSidebar = () => {
@@ -84,6 +92,12 @@ const Topbar = () => {
       sx={{
         boxShadow: (theme) => theme.customShadows.z1,
         backgroundColor: 'common.white',
+        transition: (theme) =>
+          theme.transitions.create(['all'], {
+            easing: theme.transitions.easing.sharp,
+            duration: theme.transitions.duration.leavingScreen,
+          }),
+        ...sx,
       }}
     >
       <Container>
@@ -245,14 +259,53 @@ const Topbar = () => {
               </>
             ) : (
               <>
-                <Button
-                  onClick={() => logout()}
+                <Stack
+                  component="button"
+                  direction="row"
+                  alignItems="center"
                   sx={{
-                    display: { xs: 'none', md: 'flex' },
+                    padding: theme.spacing(1, 1.5),
+                    borderRadius: theme.shape.borderRadius * 1.5 + 'px',
+                    backgroundColor: 'action.hover',
+                    cursor: 'pointer',
+                    '&:hover': {
+                      backgroundColor: 'action.selected',
+                    },
+                  }}
+                  aria-controls={openProfile ? 'basic-menu' : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={openProfile ? 'true' : undefined}
+                  onClick={(event: React.MouseEvent<HTMLButtonElement>) =>
+                    setAnchorEl(event.currentTarget)
+                  }
+                >
+                  <AccountCircle fontSize="large" color="action" sx={{ mr: 1 }} />
+                  <Box>
+                    <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+                      {user.name}
+                    </Typography>
+                  </Box>
+                </Stack>
+                <Menu
+                  id="basic-menu"
+                  anchorEl={anchorEl}
+                  open={openProfile}
+                  onClose={() => setAnchorEl(null)}
+                  MenuListProps={{
+                    'aria-labelledby': 'basic-button',
                   }}
                 >
-                  Log Out
-                </Button>
+                  <MenuItem>
+                    <Button
+                      onClick={() => logout()}
+                      sx={{
+                        display: { xs: 'none', md: 'flex' },
+                      }}
+                    >
+                      Log Out
+                    </Button>
+                  </MenuItem>
+                </Menu>
               </>
             )}
           </List>
