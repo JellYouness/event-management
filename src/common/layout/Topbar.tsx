@@ -297,13 +297,15 @@ const Topbar = ({ sx }: any) => {
                 >
                   <MenuItem>
                     <Button
-                      onClick={() => logout()}
-                      sx={{
-                        display: { xs: 'none', md: 'flex' },
-                      }}
+                      onClick={() =>
+                        router.push(Routes.Users.UpdateOne.replace('{id}', user.id.toString()))
+                      }
                     >
-                      Log Out
+                      Edit Profile
                     </Button>
+                  </MenuItem>
+                  <MenuItem>
+                    <Button onClick={() => logout()}>Log Out</Button>
                   </MenuItem>
                 </Menu>
               </>

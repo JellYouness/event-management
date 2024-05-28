@@ -158,10 +158,10 @@ const Leftbar = (props: LeftbarProps) => {
           }}
         >
           <Stack direction="row" alignItems="center">
-            <Logo id="leftbar-logo" sx={{ marginRight: 2 }} />
-            {/* <Typography variant="h6" sx={{ color: 'primary.main' }}>
-              {process.env.NEXT_PUBLIC_APP_TITLE}
-            </Typography> */}
+            {/* <Logo id="leftbar-logo" sx={{ marginRight: 2 }} /> */}
+            <Typography variant="h6" sx={{ color: 'primary.main' }}>
+              Admin Panel
+            </Typography>
           </Stack>
 
           <IconButton onClick={toggleLeftbar}>
@@ -248,7 +248,7 @@ const Leftbar = (props: LeftbarProps) => {
               color: theme.palette.primary.main,
               padding: theme.spacing(2, 2.5),
               borderRadius: theme.shape.borderRadius * 1.5 + 'px',
-              marginTop: 35,
+              marginTop: 38,
               textAlign: 'center',
               '&:hover': {
                 backgroundColor: 'action.hover',

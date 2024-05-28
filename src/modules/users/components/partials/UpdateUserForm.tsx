@@ -15,6 +15,7 @@ interface UpdateUserFormProps {
 const UpdateUserForm = (props: UpdateUserFormProps) => {
   const { item } = props;
   const schema = Yup.object().shape({
+    name: Yup.string().required('Le champ est obligatoire'),
     email: Yup.string()
       .email("Le format de l'email est incorrect")
       .required('Le champ est obligatoire'),
@@ -28,6 +29,7 @@ const UpdateUserForm = (props: UpdateUserFormProps) => {
       .required('Le champ est obligatoire'),
   });
   const defaultValues: UpdateOneInput = {
+    name: item.name,
     email: item.email,
     password: '',
     role: item.rolesNames[0],
@@ -42,6 +44,9 @@ const UpdateUserForm = (props: UpdateUserFormProps) => {
         defaultValues={defaultValues}
       >
         <Grid container spacing={3} sx={{ padding: 6 }}>
+          <Grid item xs={6}>
+            <RHFTextField name="name" label="Name" />
+          </Grid>
           <Grid item xs={6}>
             <RHFTextField name="email" label="Email" />
           </Grid>
