@@ -3,7 +3,7 @@ import usePermissions from '@modules/permissions/hooks/usePermissions';
 import { UseItems } from '@common/hooks/useItems';
 import { AccessTime, EventSeat, LocationOn } from '@mui/icons-material';
 import {
-  Paper,
+  Box,
   Button,
   Card,
   CardActions,
@@ -93,7 +93,7 @@ const ItemsCards = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
   });
   return (
     <>
-      <Paper sx={{ minHeight: 550, px: 2 }}>
+      <Box sx={{ minHeight: 550, px: 2 }}>
         {filterToolbar && <FilterToolbar filterItems={filterItems} />}
         {!items ? (
           <>
@@ -196,7 +196,7 @@ const ItemsCards = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
             </Grid>
           </>
         )}
-      </Paper>
+      </Box>
     </>
   );
 };
