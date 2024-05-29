@@ -28,7 +28,7 @@ export interface CrudApiRoutes {
   CreateOne: string;
   ReadAll: string;
   ReadOne: string;
-  UpdateOne: string;
+  UpdateOne: string ;
   CancelOne: string;
   RestoreOne: string;
   RegisterOne: string;

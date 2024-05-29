@@ -29,6 +29,7 @@ const CreateUserForm = (_props: CreateUserFormProps) => {
       .required('Le champ est obligatoire'),
   });
   const defaultValues: CreateOneInput = {
+    name: '',
     email: '',
     password: '',
     role: ROLE.USER,

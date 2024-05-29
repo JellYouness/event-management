@@ -12,7 +12,7 @@ import Namespaces from '@common/defs/namespaces';
 import Labels from '@common/defs/labels';
 import { Button, Card, CardActions, CardContent, Grid, Stack, Typography } from '@mui/material';
 import Image from 'next/image';
-import { AccessTime, Add, EventSeat, LocationOn } from '@mui/icons-material';
+import { AccessTime, Add, Create, EventSeat, HistoryEdu, LocationOn } from '@mui/icons-material';
 import dayjs from 'dayjs';
 import useEvents from '@modules/events/hooks/api/useEvents';
 import { Event } from '@modules/events/defs/types';
@@ -57,12 +57,12 @@ const EventPage: NextPage = () => {
         title={Labels.Events.ReadAll}
         action={{
           label: Labels.Events.EditOne,
-          startIcon: <Add />,
-          onClick: () => router.push(Routes.Events.CreateOne),
+          startIcon: <Create />,
+          onClick: () => router.push(Routes.Events.EditOne.replace('[id]', id.toString())),
           permission: {
             entity: Namespaces.Events,
             action: CRUD_ACTION.UPDATE,
-            entityId: item?.id
+            entityId: item?.id,
           },
         }}
       />
@@ -76,25 +76,43 @@ const EventPage: NextPage = () => {
       <Card>
         <CardContent>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={6}>
-              <Typography color="white" bgcolor="green" textAlign="center" variant="body1">
-                Open
-              </Typography>
-              <Typography variant="h3">Title</Typography>
-              <Stack direction="row" alignItems="center" spacing={2} my={1}>
-                <AccessTime />
-                <Typography variant="h6">Date</Typography>
-              </Stack>
-              <Stack direction="row" alignItems="center" spacing={2} my={1}>
-                <LocationOn />
-                <Typography variant="h6">Location</Typography>
-              </Stack>
-              <Stack direction="row" alignItems="center" spacing={2} my={1}>
-                <EventSeat />
-                <Typography variant="body1"> 50/</Typography>
+            <Grid item xs={12} sm={7}>
+              <Stack spacing={2.5}>
+                {item?.isCanceled ? (
+                  <Typography color="white" bgcolor="red" textAlign="center" variant="body1">
+                    Canceled
+                  </Typography>
+                ) : (
+                  <Typography color="white" bgcolor="green" textAlign="center" variant="body1">
+                    Active
+                  </Typography>
+                )}
+                <Typography variant="h3">{item?.name}</Typography>
+                <Stack direction="row" alignItems="center" spacing={2} my={1}>
+                  <AccessTime color="success" />
+                  <Typography variant="h6" fontWeight={400}>
+                    {item?.date.toString()}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" alignItems="center" spacing={2} my={1}>
+                  <LocationOn color="success" />
+                  <Typography variant="h6" fontWeight={400}>
+                    {item?.location}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" alignItems="center" spacing={2} my={1}>
+                  <EventSeat color="success" />
+                  <Typography variant="body1">
+                    {item?.participants}/{item?.maxParticipants}
+                  </Typography>
+                </Stack>
+                <Stack direction="row" alignItems="center" spacing={2} my={1}>
+                  <HistoryEdu color="success" />
+                  <Typography variant="body1">By {item?.user?.name}</Typography>
+                </Stack>
               </Stack>
             </Grid>
-            <Grid item xs={12} sm={6}>
+            <Grid item xs={12} sm={5}>
               <Image
                 src="/event.avif"
                 alt="Event 1"
@@ -105,31 +123,32 @@ const EventPage: NextPage = () => {
               />
             </Grid>
           </Grid>
-          <Typography variant="h6">Description</Typography>
-          <Typography variant="body1">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed in odio in odio varius
-            tincidunt. Sed in odio in odio varius tincidunt. Sed in odio in odio varius tincidunt.
+          <Typography variant="h6" mt={2}>
+            Description
           </Typography>
+          <Typography variant="body1">{item?.description}</Typography>
         </CardContent>
         <CardActions>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() =>
-              registerOne(id, { userId: user?.id } as any, {
-                displayProgress: true,
-                displaySuccess: true,
-              })
-            }
-          >
-            Register
-          </Button>
-          <Button variant="contained" color="info">
-            Share
-          </Button>
+          {item?.participants && item?.participants < item?.maxParticipants ? (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={() =>
+                registerOne(id, { userId: user?.id } as any, {
+                  displayProgress: true,
+                  displaySuccess: true,
+                })
+              }
+            >
+              Register
+            </Button>
+          ) : (
+            <Button variant="contained" color="primary" disabled>
+              Full
+            </Button>
+          )}
         </CardActions>
       </Card>
-      {/* {item && <UpdateUserForm item={item} />} */}
     </>
   );
 };

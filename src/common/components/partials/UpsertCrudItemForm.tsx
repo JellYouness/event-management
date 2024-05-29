@@ -92,6 +92,7 @@ const UpsertCrudItemForm = <
     onPreSubmit,
     onPostSubmit,
   } = props;
+
   const { enqueueSnackbar } = useSnackbar();
   const [loaded, setLoaded] = useState(false);
   const router = useRouter();
