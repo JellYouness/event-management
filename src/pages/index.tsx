@@ -1,4 +1,5 @@
 import PageHeader from '@common/components/lib/partials/PageHeader';
+import { RHFTextField } from '@common/components/lib/react-hook-form';
 import RHFImageDropzone from '@common/components/lib/react-hook-form/RHFImageDropzone';
 import CreateCrudItemForm from '@common/components/partials/CreateCrudItemForm';
 import Routes from '@common/defs/routes';
@@ -19,16 +20,16 @@ const Index: NextPage = () => {
   };
   return (
     <>
-      <PageHeader title="Dashboard" />
-      <EventsCards filterToolbar fetchItems />
-      {/* <CreateCrudItemForm<Upload, CreateOneInput>
+      {/* <PageHeader title="Dashboard" />
+      <EventsCards filterToolbar fetchItems /> */}
+      <CreateCrudItemForm<Upload, CreateOneInput>
         routes={Routes.Users}
         useItems={useUploads}
         schema={schema}
         defaultValues={defaultValues}
       >
         <RHFImageDropzone name="file" label="image" />
-      </CreateCrudItemForm> */}
+      </CreateCrudItemForm>
     </>
   );
 };
