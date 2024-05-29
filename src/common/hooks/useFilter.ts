@@ -1,4 +1,4 @@
-import { Row } from '@modules/myevents/components/partials/MyEventsTable';
+import { Row } from '@modules/events/components/partials/EventsCards';
 import dayjs from 'dayjs';
 import { useState } from 'react';
 

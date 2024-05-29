@@ -6,6 +6,7 @@ const Routes: CrudRoutes = {
   CreateOne: prefix + '/create',
   UpdateOne: prefix + '/{id}',
   Registered: prefix + '/registered',
+  MyEvents: '/myevents',
 };
 
 export default Routes;

@@ -51,4 +51,5 @@ export interface CrudLabels {
   Items: string;
   EditOne: string;
   Registered: string;
+  MyEvents: string;
 }

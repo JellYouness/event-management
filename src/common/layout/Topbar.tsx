@@ -64,8 +64,8 @@ const Topbar = ({ sx }: any) => {
     },
     {
       label: 'My Events',
-      link: Routes.MyEvents.ReadAll,
-      onClick: () => router.push(Routes.MyEvents.ReadAll),
+      link: Routes.Events.MyEvents,
+      onClick: () => router.push(Routes.Events.MyEvents),
     },
   ];
 

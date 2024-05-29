@@ -19,7 +19,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import dayjs from 'dayjs';
-import { Event } from '@modules/myevents/defs/types';
+import { Event } from '@modules/events/defs/types';
 import useAuth from '@modules/auth/hooks/api/useAuth';
 import useFilter from '@common/hooks/useFilter';
 import FilterToolbar from '@common/components/partials/FilterToolbar';
@@ -180,19 +180,25 @@ const ItemsCards = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                     <CardActions sx={{ justifyContent: 'space-between' }}>
                       <Stack direction="row" alignItems="center" spacing={2} my={1}>
                         <EventSeat />
-                        <Typography variant="body1"> 50/{item.maxParticipants}</Typography>
+                        <Typography variant="body1">
+                          {item.participants}/{item.maxParticipants}
+                        </Typography>
                       </Stack>
                       {!ownItems &&
                         !registredtems &&
                         (item.userId === user?.id ? (
                           <Chip variant="outlined" label="Your Event" color="info" />
-                        ) : (
+                        ) : item.participants < item.maxParticipants ? (
                           <Button
                             startIcon={<LocationOn />}
                             variant="contained"
                             disabled={item.isCanceled}
                           >
                             Register
+                          </Button>
+                        ) : (
+                          <Button variant="contained" color="primary" disabled>
+                            Full
                           </Button>
                         ))}
                     </CardActions>

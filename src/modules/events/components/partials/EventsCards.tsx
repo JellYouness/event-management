@@ -13,16 +13,17 @@ export interface Row extends CrudRow {
   image: string;
   maxParticipants: number;
   userId: number;
+  participants: number;
 }
 
-interface MyEventsTableProps {
+interface EventsCardsProps {
   fetchItems?: boolean;
   ownItems?: boolean;
   registredtems?: boolean;
   filterToolbar?: boolean;
 }
 
-const MyEventsTable = (props: MyEventsTableProps) => {
+const EventsCards = (props: EventsCardsProps) => {
   const {fetchItems, ownItems, filterToolbar, registredtems } = props;
   const itemToRow = (item: Event): Row => {
     return {
@@ -34,6 +35,7 @@ const MyEventsTable = (props: MyEventsTableProps) => {
       image: item.image,
       maxParticipants: item.maxParticipants,
       userId: item.userId,
+      participants: item.participants,
     };
   };
 
@@ -53,4 +55,4 @@ const MyEventsTable = (props: MyEventsTableProps) => {
   );
 };
 
-export default MyEventsTable;
+export default EventsCards;

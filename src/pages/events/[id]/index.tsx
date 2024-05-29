@@ -69,7 +69,7 @@ const EventPage: NextPage = () => {
       <CustomBreadcrumbs
         links={[
           { name: 'Dashboard', href: Routes.Common.Home },
-          { name: Labels.Events.Items, href: Routes.MyEvents.ReadAll },
+          { name: Labels.Events.Items, href: Routes.Events.ReadAll },
           { name: item ? item.name : Labels.Users.EditOne },
         ]}
       />

@@ -7,6 +7,7 @@ const Labels: CrudLabels = {
   Items: 'Events',
   EditOne: 'Edit event',
   Registered: 'Registered the event',
+  MyEvents: 'My events',
 };
 
 export default Labels;

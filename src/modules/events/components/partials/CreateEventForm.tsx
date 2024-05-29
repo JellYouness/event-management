@@ -43,7 +43,7 @@ const CreateEventForm = (_props: CreateEventFormProps) => {
     _methods: UseFormReturn<CreateOneInput>
   ) => {
     if (response.success) {
-      router.push(Routes.Events.ReadAll);
+      router.push(Routes.Events.MyEvents);
     }
   };
   return (

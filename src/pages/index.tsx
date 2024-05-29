@@ -3,7 +3,7 @@ import RHFImageDropzone from '@common/components/lib/react-hook-form/RHFImageDro
 import CreateCrudItemForm from '@common/components/partials/CreateCrudItemForm';
 import Routes from '@common/defs/routes';
 import withAuth, { AUTH_MODE } from '@modules/auth/hocs/withAuth';
-import MyEventsTable from '@modules/myevents/components/partials/MyEventsTable';
+import EventsCards from '@modules/events/components/partials/EventsCards';
 import { Upload } from '@modules/uploads/defs/types';
 import useUploads, { CreateOneInput } from '@modules/uploads/hooks/api/useUploads';
 import { NextPage } from 'next';
@@ -20,15 +20,15 @@ const Index: NextPage = () => {
   return (
     <>
       <PageHeader title="Dashboard" />
-      {/* <MyEventsTable filterToolbar fetchItems /> */}
-      <CreateCrudItemForm<Upload, CreateOneInput>
+      <EventsCards filterToolbar fetchItems />
+      {/* <CreateCrudItemForm<Upload, CreateOneInput>
         routes={Routes.Users}
         useItems={useUploads}
         schema={schema}
         defaultValues={defaultValues}
       >
         <RHFImageDropzone name="file" label="image" />
-      </CreateCrudItemForm>
+      </CreateCrudItemForm> */}
     </>
   );
 };

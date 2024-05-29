@@ -8,7 +8,7 @@ import PageHeader from '@common/components/lib/partials/PageHeader';
 import { CRUD_ACTION } from '@common/defs/types';
 import Namespaces from '@common/defs/namespaces';
 import Labels from '@common/defs/labels';
-import MyEventsTable from '@modules/myevents/components/partials/MyEventsTable';
+import EventsCards from '@modules/events/components/partials/EventsCards';
 
 const RegistredEventsPage: NextPage = () => {
   const router = useRouter();
@@ -21,7 +21,7 @@ const RegistredEventsPage: NextPage = () => {
           { name: Labels.Events.Registered },
         ]}
       />
-      <MyEventsTable filterToolbar registredtems />
+      <EventsCards filterToolbar registredtems />
     </>
   );
 };
