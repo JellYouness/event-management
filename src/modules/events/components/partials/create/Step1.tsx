@@ -56,7 +56,7 @@ const CreateUserStep1 = forwardRef((props: CreateUserStep1Props, ref: Ref<FormSt
             <RHFTextField name="email" label="Email" />
           </Grid>
           <Grid item xs={6}>
-            <RHFTextField name="password" label="Mot de passe" type="password" />
+            <RHFTextField name="password" label="Password" type="password" />
           </Grid>
         </Grid>
       </CreateCrudItemForm>

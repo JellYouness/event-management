@@ -1,11 +1,13 @@
 import { CrudLabels } from '@common/defs/types';
 
 const Labels: CrudLabels = {
-  CreateNewOne: 'Créer un nouvel evenement',
-  NewOne: 'Nouvel evenement',
-  ReadAll: 'Liste des evenements',
-  Items: 'Evenements',
-  EditOne: "Éditer l'evenement",
+  CreateNewOne: 'Create a new event',
+  NewOne: 'New event',
+  ReadAll: 'Events list',
+  Items: 'Events',
+  EditOne: 'Edit event',
+  Registered: 'Registered the event',
+  MyEvents: 'My events',
 };
 
 export default Labels;

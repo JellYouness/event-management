@@ -1,54 +1,59 @@
-import { RHFSelect, RHFSwitch, RHFTextField } from '@common/components/lib/react-hook-form';
-import CreateCrudItemForm from '@common/components/partials/CreateCrudItemForm';
+import { RHFSwitch, RHFTextField } from '@common/components/lib/react-hook-form';
+import RHFImageDropzone from '@common/components/lib/react-hook-form/RHFImageDropzone';
+import UpdateCrudItemForm from '@common/components/partials/UpdateCrudItemForm';
 import Routes from '@common/defs/routes';
-import { ItemResponse } from '@common/hooks/useItems';
+import { Event } from '@modules/events/defs/types';
 import { ROLES_OPTIONS } from '@modules/permissions/defs/options';
 import { ROLE } from '@modules/permissions/defs/types';
-import { Event } from '@modules/events/defs/types';
-import useEvents, { CreateOneInput } from '@modules/events/hooks/api/useEvents';
-import { Grid, InputLabel, MenuItem } from '@mui/material';
-import { useRouter } from 'next/router';
-import { UseFormReturn } from 'react-hook-form';
+import { User } from '@modules/users/defs/types';
+import useEvents, { UpdateOneInput } from '@modules/events/hooks/api/useEvents';
+import { Grid, MenuItem } from '@mui/material';
 import * as Yup from 'yup';
-import RHFDatePicker from '@common/components/lib/react-hook-form/RHFDatePicker';
-import RHFImageDropzone from '@common/components/lib/react-hook-form/RHFImageDropzone';
-import { Label } from '@mui/icons-material';
-import dayjs, { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
+import { ItemResponse } from '@common/hooks/useItems';
+import { UseFormReturn } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
-interface CreateEventFormProps {}
+interface UpdateEventFormProps {
+  item: Event;
+}
 
-const CreateEventForm = (_props: CreateEventFormProps) => {
+const UpdateEventForm = (props: UpdateEventFormProps) => {
   const router = useRouter();
+  const { item } = props;
   const schema = Yup.object().shape({
     name: Yup.string().required('The field is required'),
     date: Yup.date().required('The field is required'),
     location: Yup.string().required('The field is required'),
     description: Yup.string().required('The field is required'),
     maxParticipants: Yup.number().positive().required('The field is required'),
-    image: Yup.string()
+    image: Yup.string(),
   });
-  const defaultValues: CreateOneInput = {
-    name: '',
+  const defaultValues: UpdateOneInput = {
+    name: item.name,
     // @ts-ignore
-    date: dayjs(new Date()),
+    date: dayjs(item.date).format('YYYY-MM-DD hh:mm'),
     //date: Dayjs().toDate(),
-    location: '',
-    description: '',
-    maxParticipants: 0,
-    image: '',
+    location: item.location,
+    description: item.description,
+    maxParticipants: item.maxParticipants,
+    image: item.image,
+    isCanceled: item.isCanceled,
   };
+
   const onPostSubmit = async (
-    _data: CreateOneInput,
+    _data: UpdateOneInput,
     response: ItemResponse<Event>,
-    _methods: UseFormReturn<CreateOneInput>
+    _methods: UseFormReturn<UpdateOneInput>
   ) => {
     if (response.success) {
-      router.push(Routes.Events.MyEvents);
+      router.push(Routes.Events.ReadOne.replace('{id}', item.id.toString()));
     }
   };
   return (
     <>
-      <CreateCrudItemForm<Event, CreateOneInput>
+      <UpdateCrudItemForm<Event, UpdateOneInput>
+        item={item}
         routes={Routes.Events}
         useItems={useEvents}
         schema={schema}
@@ -60,11 +65,10 @@ const CreateEventForm = (_props: CreateEventFormProps) => {
             <RHFTextField name="name" label="Name" />
           </Grid>
           <Grid item xs={12} md={6}>
-            <RHFDatePicker name="date" label="Date" />
-            {/* <RHFTextField name="date" label="Date" /> */}
+            {/* <RHFDatePicker name="date" label="Date" /> */}
+            <RHFTextField name="date" label="Date" />
           </Grid>
           <Grid item xs={12} md={6}>
-            {/* <InputLabel>Location</InputLabel> */}
             <RHFTextField name="location" label="Location" />
           </Grid>
           <Grid item xs={12} md={6}>
@@ -80,10 +84,13 @@ const CreateEventForm = (_props: CreateEventFormProps) => {
           <Grid item xs={12} md={6}>
             <RHFImageDropzone name="image" label="Image" />
           </Grid>
+          <Grid item xs={12}>
+            <RHFSwitch name="isCanceled" label="Canceled" />
+          </Grid>
         </Grid>
-      </CreateCrudItemForm>
+      </UpdateCrudItemForm>
     </>
   );
 };
 
-export default CreateEventForm;
+export default UpdateEventForm;

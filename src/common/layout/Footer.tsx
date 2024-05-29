@@ -64,7 +64,7 @@ const Footer = () => {
         zIndex: 100,
         backgroundColor: 'primary.darker',
         width: '100%',
-        paddingY: { xs: 2, md: 6 },
+        paddingY: { xs: 2 },
         marginTop: 10,
         display: 'flex',
         flexDirection: 'column',

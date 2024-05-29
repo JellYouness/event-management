@@ -23,6 +23,11 @@ const UsersTable = () => {
       width: 100,
     },
     {
+      field: 'name',
+      headerName: 'Name',
+      flex: 1,
+    },
+    {
       field: 'email',
       headerName: 'Email',
       flex: 1,
@@ -43,7 +48,7 @@ const UsersTable = () => {
     },
     {
       field: 'createdAt',
-      headerName: "Date d'inscription",
+      headerName: 'Registration date',
       type: 'dateTime',
       flex: 1,
       renderCell: (params) => dayjs(params.row.createdAt).format('DD/MM/YYYY hh:mm'),
@@ -53,6 +58,7 @@ const UsersTable = () => {
   const itemToRow = (item: User): Row => {
     return {
       id: item.id,
+      name: item.name,
       email: item.email,
       createdAt: item.createdAt,
       roles: item.rolesNames,

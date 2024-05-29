@@ -92,6 +92,7 @@ const UpsertCrudItemForm = <
     onPreSubmit,
     onPostSubmit,
   } = props;
+
   const { enqueueSnackbar } = useSnackbar();
   const [loaded, setLoaded] = useState(false);
   const router = useRouter();
@@ -191,7 +192,7 @@ const UpsertCrudItemForm = <
                       onClick={() => router.push(routes.ReadAll)}
                       sx={{ marginRight: 2 }}
                     >
-                      Retour
+                      Go Back
                     </Button>
                     <LoadingButton
                       size="large"
@@ -199,7 +200,7 @@ const UpsertCrudItemForm = <
                       variant="contained"
                       loading={isSubmitting}
                     >
-                      Enregistrer
+                      Save
                     </LoadingButton>
                   </Stack>
                 )}

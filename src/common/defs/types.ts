@@ -28,9 +28,10 @@ export interface CrudApiRoutes {
   CreateOne: string;
   ReadAll: string;
   ReadOne: string;
-  UpdateOne: string;
+  UpdateOne: string ;
   CancelOne: string;
   RestoreOne: string;
+  RegisterOne: string;
   DeleteOne: string;
   [key: string]: string;
 }
@@ -49,4 +50,6 @@ export interface CrudLabels {
   ReadAll: string;
   Items: string;
   EditOne: string;
+  Registered: string;
+  MyEvents: string;
 }

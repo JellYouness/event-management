@@ -22,7 +22,7 @@ const EventsPage: NextPage = () => {
           startIcon: <Add />,
           onClick: () => router.push(Routes.Events.CreateOne),
           permission: {
-            entity: Namespaces.Users,
+            entity: Namespaces.Events,
             action: CRUD_ACTION.CREATE,
           },
         }}
@@ -39,7 +39,7 @@ export default withAuth(
   withPermissions(EventsPage, {
     requiredPermissions: [
       {
-        entity: Namespaces.Users,
+        entity: Namespaces.Events,
         action: CRUD_ACTION.READ,
       },
     ],

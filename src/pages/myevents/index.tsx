@@ -2,7 +2,7 @@ import withAuth, { AUTH_MODE } from '@modules/auth/hocs/withAuth';
 import withPermissions from '@modules/permissions/hocs/withPermissions';
 import { NextPage } from 'next';
 import Routes from '@common/defs/routes';
-import EventsTable from '@modules/events/components/partials/EventsTable';
+import EventsCards from '@modules/events/components/partials/EventsCards';
 import CustomBreadcrumbs from '@common/components/lib/navigation/CustomBreadCrumbs';
 import { useRouter } from 'next/router';
 import { Add } from '@mui/icons-material';
@@ -16,21 +16,21 @@ const MyEventsPage: NextPage = () => {
   return (
     <>
       <PageHeader
-        title={Labels.MyEvents.ReadAll}
+        title={Labels.Events.MyEvents}
         action={{
-          label: Labels.MyEvents.NewOne,
+          label: Labels.Events.NewOne,
           startIcon: <Add />,
-          onClick: () => router.push(Routes.MyEvents.CreateOne),
+          onClick: () => router.push(Routes.Events.CreateOne),
           permission: {
-            entity: Namespaces.Users,
+            entity: Namespaces.Events,
             action: CRUD_ACTION.CREATE,
           },
         }}
       />
       <CustomBreadcrumbs
-        links={[{ name: 'Dashboard', href: Routes.Common.Home }, { name: Labels.MyEvents.Items }]}
+        links={[{ name: 'Dashboard', href: Routes.Common.Home }, { name: Labels.Events.MyEvents }]}
       />
-      {/* <EventsTable /> */}
+      <EventsCards ownItems />
     </>
   );
 };
@@ -39,7 +39,7 @@ export default withAuth(
   withPermissions(MyEventsPage, {
     requiredPermissions: [
       {
-        entity: Namespaces.Users,
+        entity: Namespaces.Events,
         action: CRUD_ACTION.READ,
       },
     ],

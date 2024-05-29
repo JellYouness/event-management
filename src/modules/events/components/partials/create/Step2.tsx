@@ -52,7 +52,7 @@ const CreateUserStep2 = forwardRef((props: CreateUserStep2Props, ref: Ref<FormSt
         displayFooter={false}
       >
         <Stack justifyContent="center" sx={{ padding: 6 }}>
-          <RHFSelect name="role" label="Rôle" sx={{ width: 350, margin: '0 auto' }}>
+          <RHFSelect name="role" label="Role" sx={{ width: 350, margin: '0 auto' }}>
             {ROLES_OPTIONS.map((option) => (
               <MenuItem key={option.value} value={option.value}>
                 {option.label}

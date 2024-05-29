@@ -25,6 +25,11 @@ const Layout = (props: ILayoutProps) => {
     entity: Namespaces.Users,
     action: CRUD_ACTION.CREATE,
   };
+  //if admin
+  const leftBarStyle = can(permission.entity, permission.action) && {
+    marginLeft: openLeftbar ? LEFTBAR_WIDTH + 'px' : 0,
+    width: openLeftbar ? `calc(100% - ${LEFTBAR_WIDTH}px)` : '100%',
+  };
   return (
     <div>
       <Head>
@@ -47,14 +52,13 @@ const Layout = (props: ILayoutProps) => {
               />
             )}
 
-            <Topbar />
+            <Topbar sx={leftBarStyle} openLeftbar={openLeftbar} />
             <Box
               sx={{
                 display: 'flex',
                 flex: 1,
                 justifyContent: 'center',
-                marginLeft: openLeftbar ? LEFTBAR_WIDTH + 'px' : 0,
-                width: openLeftbar ? `calc(100% - ${LEFTBAR_WIDTH}px)` : '100%',
+                ...leftBarStyle,
               }}
             >
               <Container
@@ -74,8 +78,7 @@ const Layout = (props: ILayoutProps) => {
             </Box>
             <Box
               sx={{
-                marginLeft: openLeftbar ? LEFTBAR_WIDTH + 'px' : 0,
-                maxWidth: openLeftbar ? `calc(100% - ${LEFTBAR_WIDTH}px)` : '100%',
+                ...leftBarStyle,
                 transition: theme.transitions.create(['all'], {
                   easing: theme.transitions.easing.sharp,
                   duration: theme.transitions.duration.leavingScreen,

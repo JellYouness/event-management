@@ -14,7 +14,7 @@ import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import { pxToRem } from '@common/theme/typography';
 import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
-import {AccountBoxRounded,Event} from '@mui/icons-material';
+import { AccountBoxRounded, Event } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import Typography from '@mui/material/Typography';
 import useAuth from '@modules/auth/hooks/api/useAuth';
@@ -67,14 +67,14 @@ const Leftbar = (props: LeftbarProps) => {
     const newEntries: NavGroup[] = [];
     if (user) {
       const managementGroup: NavGroup = {
-        text: 'Gestion',
+        text: 'Management',
         items: [],
       };
-      managementGroup.items.push({
+      /* managementGroup.items.push({
         text: 'Dashboard',
         icon: <DashboardCustomizeRoundedIcon />,
         link: Routes.Common.Home,
-      });
+      }); */
       pushCrudNavItem(
         {
           icon: <AccountBoxRounded />,
@@ -136,7 +136,7 @@ const Leftbar = (props: LeftbarProps) => {
         PaperProps={{
           sx: {
             width: LEFTBAR_WIDTH,
-            bgcolor: 'background.default',
+            bgcolor: 'common.white',
             borderRightStyle: 'dashed',
             marginTop: 0.5,
             px: 2.5,
@@ -151,16 +151,16 @@ const Leftbar = (props: LeftbarProps) => {
           justifyContent="space-between"
           alignItems="center"
           sx={{
-            py: 3,
+            py: 2,
             marginBottom: 2,
             borderBottomWidth: 1,
             borderBottomColor: 'grey.300',
           }}
         >
           <Stack direction="row" alignItems="center">
-            <Logo id="leftbar-logo" sx={{ marginRight: 2 }} />
+            {/* <Logo id="leftbar-logo" sx={{ marginRight: 2 }} /> */}
             <Typography variant="h6" sx={{ color: 'primary.main' }}>
-              {process.env.NEXT_PUBLIC_APP_TITLE}
+              Admin Panel
             </Typography>
           </Stack>
 
@@ -189,7 +189,7 @@ const Leftbar = (props: LeftbarProps) => {
             <AccountCircle fontSize="large" color="action" sx={{ mr: 1 }} />
             <Box>
               <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
-                {user.email}
+                {user.name}
               </Typography>
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 {user.rolesNames[0]}
@@ -245,10 +245,10 @@ const Leftbar = (props: LeftbarProps) => {
         {user && (
           <IconButton
             sx={{
-              color: theme.palette.text.secondary,
+              color: theme.palette.primary.main,
               padding: theme.spacing(2, 2.5),
               borderRadius: theme.shape.borderRadius * 1.5 + 'px',
-              marginTop: 10,
+              marginTop: 45,
               textAlign: 'center',
               '&:hover': {
                 backgroundColor: 'action.hover',
@@ -260,8 +260,8 @@ const Leftbar = (props: LeftbarProps) => {
             }}
           >
             <ExitToAppOutlined sx={{ marginRight: 1 }} fontSize="small" />
-            <Typography variant="body2" sx={{ cursor: 'pointer' }}>
-              Déconnexion
+            <Typography variant="body2" fontWeight={700} sx={{ cursor: 'pointer' }}>
+              Log Out
             </Typography>
           </IconButton>
         )}
@@ -271,7 +271,7 @@ const Leftbar = (props: LeftbarProps) => {
           sx={{
             position: 'absolute',
             display: 'flex',
-            top: 15,
+            top: { xs: 8, sm: 15 },
             left: {
               xs: 6,
               sm: 18,

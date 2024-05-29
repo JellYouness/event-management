@@ -53,6 +53,9 @@ const CreateUserStep1 = forwardRef((props: CreateUserStep1Props, ref: Ref<FormSt
       >
         <Grid container spacing={3} sx={{ padding: 6 }}>
           <Grid item xs={6}>
+            <RHFTextField name="name" label="Name" />
+          </Grid>
+          <Grid item xs={6}>
             <RHFTextField name="email" label="Email" />
           </Grid>
           <Grid item xs={6}>

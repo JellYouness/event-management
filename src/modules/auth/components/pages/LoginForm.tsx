@@ -14,10 +14,8 @@ import Routes from '@common/defs/routes';
 const LoginForm = () => {
   const { login } = useAuth();
   const LoginSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Le format de l'email est incorrect")
-      .required('Le champ est obligatoire'),
-    password: Yup.string().required('Le champ est obligatoire'),
+    email: Yup.string().email('Email format is incorrect').required('The field is required'),
+    password: Yup.string().required('The field is required'),
   });
   const methods = useForm<LoginInput>({
     resolver: yupResolver(LoginSchema),
@@ -52,7 +50,7 @@ const LoginForm = () => {
           fontWeight: 'bold',
         }}
       >
-        Connexion
+        Log In
       </Typography>
       <Card sx={{ maxWidth: '450px', margin: 'auto' }}>
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -61,7 +59,7 @@ const LoginForm = () => {
               <RHFTextField name="email" label="Email" />
             </Grid>
             <Grid item xs={12}>
-              <RHFTextField name="password" label="Mot de passe" type="password" />
+              <RHFTextField name="password" label="Password" type="password" />
             </Grid>
             <Grid item xs={12} sx={{ textAlign: 'center' }}>
               <LoadingButton
@@ -72,13 +70,13 @@ const LoginForm = () => {
                 loadingPosition="start"
                 loading={isSubmitting}
               >
-                Enregistrer
+                Log In
               </LoadingButton>
             </Grid>
             <Grid item xs={12} sx={{ textAlign: 'center' }}>
               <Typography variant="body2" color="text.secondary">
-                Vous avez oublié votre mot de passe ? {` `}
-                <Link href={Routes.Auth.RequestPasswordReset}>Cliquez ici</Link>
+                Forgot your password ? {` `}
+                <Link href={Routes.Auth.RequestPasswordReset}>Click here</Link>
               </Typography>
             </Grid>
           </Grid>

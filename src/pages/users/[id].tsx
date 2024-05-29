@@ -53,7 +53,7 @@ const UsersPage: NextPage = () => {
         links={[
           { name: 'Dashboard', href: Routes.Common.Home },
           { name: Labels.Users.Items, href: Routes.Users.ReadAll },
-          { name: item ? item.email : Labels.Users.EditOne },
+          { name: item ? item.name : Labels.Users.EditOne },
         ]}
       />
 
