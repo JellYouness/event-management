@@ -1,5 +1,11 @@
 ## Getting Started
 
+# Installing
+
+- install dependencies `npm install`
+
+- run the app `npm run dev`
+
 # Tech Stack
 
 - MUI

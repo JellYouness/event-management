@@ -47,7 +47,7 @@ const UpdateEventForm = (props: UpdateEventFormProps) => {
     _methods: UseFormReturn<UpdateOneInput>
   ) => {
     if (response.success) {
-      router.push(Routes.Events.ReadOne.replace('{id}', item.id.toString()));
+      router.push(Routes.Events.UpdateOne.replace('{id}', item.id.toString()));
     }
   };
   return (
