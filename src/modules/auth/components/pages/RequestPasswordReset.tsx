@@ -14,9 +14,7 @@ import Routes from '@common/defs/routes';
 const RequestPasswordReset = () => {
   const { requestPasswordReset } = useAuth();
   const RequestPasswordResetSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Le format de l'email est incorrect")
-      .required('Le champ est obligatoire'),
+    email: Yup.string().email('Email format is incorrect').required('The field is required'),
   });
   const methods = useForm<RequestPasswordResetInput>({
     resolver: yupResolver(RequestPasswordResetSchema),
@@ -66,13 +64,13 @@ const RequestPasswordReset = () => {
                 loadingPosition="start"
                 loading={isSubmitting}
               >
-                Réinitialiser le mot de passe
+                Reset password
               </LoadingButton>
             </Grid>
             <Grid item xs={12} sx={{ textAlign: 'center' }}>
               <Typography variant="body2" color="text.secondary">
-                Vous avez retrouvé votre mot de passe ? {` `}
-                <Link href={Routes.Auth.Login}>Cliquez ici</Link>
+                Have you found your password? {` `}
+                <Link href={Routes.Auth.Login}>Click here</Link>
               </Typography>
             </Grid>
           </Grid>

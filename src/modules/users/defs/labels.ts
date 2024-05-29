@@ -1,11 +1,11 @@
 import { CrudLabels } from '@common/defs/types';
 
 const Labels: CrudLabels = {
-  CreateNewOne: 'Créer un nouvel utilisateur',
-  NewOne: 'Nouvel utilisateur',
-  ReadAll: 'Liste des utilisateurs',
-  Items: 'Utilisateurs',
-  EditOne: "Éditer l'utilisateur",
+  CreateNewOne: 'Create a new user',
+  NewOne: 'New user',
+  ReadAll: 'Users list',
+  Items: 'Users',
+  EditOne: 'Edit user',
 };
 
 export default Labels;

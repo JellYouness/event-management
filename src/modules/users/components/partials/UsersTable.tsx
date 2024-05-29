@@ -48,7 +48,7 @@ const UsersTable = () => {
     },
     {
       field: 'createdAt',
-      headerName: "Date d'inscription",
+      headerName: 'Registration date',
       type: 'dateTime',
       flex: 1,
       renderCell: (params) => dayjs(params.row.createdAt).format('DD/MM/YYYY hh:mm'),

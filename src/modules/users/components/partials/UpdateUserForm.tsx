@@ -15,18 +15,16 @@ interface UpdateUserFormProps {
 const UpdateUserForm = (props: UpdateUserFormProps) => {
   const { item } = props;
   const schema = Yup.object().shape({
-    name: Yup.string().required('Le champ est obligatoire'),
-    email: Yup.string()
-      .email("Le format de l'email est incorrect")
-      .required('Le champ est obligatoire'),
+    name: Yup.string().required('The field is required'),
+    email: Yup.string().email('Email format is incorrect').required('The field is required'),
     password: Yup.string(),
     role: Yup.mixed<ROLE>()
       .oneOf(Object.values(ROLE), (_values) => {
-        return `Le champ doit avoir l'une des valeurs suivantes : ${ROLES_OPTIONS.map(
+        return `The field must have one of the following values : ${ROLES_OPTIONS.map(
           (option) => option.label
         ).join(', ')}`;
       })
-      .required('Le champ est obligatoire'),
+      .required('The field is required'),
   });
   const defaultValues: UpdateOneInput = {
     name: item.name,
@@ -51,10 +49,10 @@ const UpdateUserForm = (props: UpdateUserFormProps) => {
             <RHFTextField name="email" label="Email" />
           </Grid>
           <Grid item xs={6}>
-            <RHFTextField name="password" label="Mot de passe" type="password" />
+            <RHFTextField name="password" label="Password" type="password" />
           </Grid>
           <Grid item xs={6}>
-            <RHFSelect name="role" label="Rôle">
+            <RHFSelect name="role" label="Role">
               {ROLES_OPTIONS.map((option) => (
                 <MenuItem key={option.value} value={option.value}>
                   {option.label}

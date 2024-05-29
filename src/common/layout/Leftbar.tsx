@@ -14,7 +14,7 @@ import Drawer from '@mui/material/Drawer';
 import Box from '@mui/material/Box';
 import { pxToRem } from '@common/theme/typography';
 import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
-import {AccountBoxRounded,Event} from '@mui/icons-material';
+import { AccountBoxRounded, Event } from '@mui/icons-material';
 import { useRouter } from 'next/router';
 import Typography from '@mui/material/Typography';
 import useAuth from '@modules/auth/hooks/api/useAuth';
@@ -67,14 +67,14 @@ const Leftbar = (props: LeftbarProps) => {
     const newEntries: NavGroup[] = [];
     if (user) {
       const managementGroup: NavGroup = {
-        text: 'Gestion',
+        text: 'Management',
         items: [],
       };
-      managementGroup.items.push({
+      /* managementGroup.items.push({
         text: 'Dashboard',
         icon: <DashboardCustomizeRoundedIcon />,
         link: Routes.Common.Home,
-      });
+      }); */
       pushCrudNavItem(
         {
           icon: <AccountBoxRounded />,
@@ -248,7 +248,7 @@ const Leftbar = (props: LeftbarProps) => {
               color: theme.palette.primary.main,
               padding: theme.spacing(2, 2.5),
               borderRadius: theme.shape.borderRadius * 1.5 + 'px',
-              marginTop: 38,
+              marginTop: 45,
               textAlign: 'center',
               '&:hover': {
                 backgroundColor: 'action.hover',
@@ -261,7 +261,7 @@ const Leftbar = (props: LeftbarProps) => {
           >
             <ExitToAppOutlined sx={{ marginRight: 1 }} fontSize="small" />
             <Typography variant="body2" sx={{ cursor: 'pointer' }}>
-              Déconnexion
+              Log Out
             </Typography>
           </IconButton>
         )}

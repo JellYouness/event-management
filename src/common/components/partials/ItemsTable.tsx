@@ -82,7 +82,7 @@ const ItemsTable = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                   <Edit /> Edit
                 </MenuItem>
               )}
-              {!params.row.isCanceled && can(namespace, CRUD_ACTION.UPDATE) && (
+              {!params.row.isCanceled && can(namespace, CRUD_ACTION.CANCEL) && (
                 <MenuItem
                   onClick={() => {
                     setToCancelId(params.row.id);
@@ -93,7 +93,7 @@ const ItemsTable = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                   <Cancel /> Cancel
                 </MenuItem>
               )}
-              {params.row.isCanceled ? can(namespace, CRUD_ACTION.UPDATE) && (
+              {params.row.isCanceled ? can(namespace, CRUD_ACTION.CANCEL) && (
                 <MenuItem
                   onClick={() => {
                     setToRestoreId(params.row.id);
@@ -155,7 +155,7 @@ const ItemsTable = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                 pagination
                 rows={rows}
                 columns={columns}
-                localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
+                //localeText={frFR.components.MuiDataGrid.defaultProps.localeText}
                 components={{
                   Toolbar: GridToolbar,
                 }}
@@ -176,8 +176,7 @@ const ItemsTable = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                 title="Supprimer"
                 content={
                   <Typography variant="body1" color="textSecondary">
-                    Êtes-vous sûr de vouloir supprimer cet élément ? <br /> Cette action est
-                    irréversible.
+                    Are you sure you want to delete this item? <br /> This action is irreversible.
                   </Typography>
                 }
                 action={
@@ -191,7 +190,7 @@ const ItemsTable = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                       }
                     }}
                   >
-                    Supprimer
+                    Delete
                   </Button>
                 }
               />
@@ -201,8 +200,7 @@ const ItemsTable = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                 title="Cancel"
                 content={
                   <Typography variant="body1" color="textSecondary">
-                    Êtes-vous sûr de vouloir supprimer cet élément ? <br /> Cette action est
-                    irréversible.
+                    Are you sure you want to cancel this event?
                   </Typography>
                 }
                 action={
@@ -226,8 +224,7 @@ const ItemsTable = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                 title="Restore"
                 content={
                   <Typography variant="body1" color="textSecondary">
-                    Êtes-vous sûr de vouloir supprimer cet élément ? <br /> Cette action est
-                    irréversible.
+                    Are you sure you want to restore this event?
                   </Typography>
                 }
                 action={

@@ -18,11 +18,11 @@ interface UpdateEventFormProps {
 const UpdateEventForm = (props: UpdateEventFormProps) => {
   const { item } = props;
   const schema = Yup.object().shape({
-    name: Yup.string().required('Le champ est obligatoire'),
-    date: Yup.date().required('Le champ est obligatoire'),
-    location: Yup.string().required('Le champ est obligatoire'),
-    description: Yup.string().required('Le champ est obligatoire'),
-    maxParticipants: Yup.number().positive().required('Le champ est obligatoire'),
+    name: Yup.string().required('The field is required'),
+    date: Yup.date().required('The field is required'),
+    location: Yup.string().required('The field is required'),
+    description: Yup.string().required('The field is required'),
+    maxParticipants: Yup.number().positive().required('The field is required'),
     image: Yup.string(),
   });
   const defaultValues: UpdateOneInput = {

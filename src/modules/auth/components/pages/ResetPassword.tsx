@@ -18,13 +18,11 @@ type ResetPasswordInputForm = Omit<ResetPasswordInput, 'token'>;
 const ResetPassword = (props: ResetPasswordProps) => {
   const { resetPassword } = useAuth();
   const ResetPasswordSchema = Yup.object().shape({
-    email: Yup.string()
-      .email("Le format de l'email est incorrect")
-      .required('Le champ est obligatoire'),
-    password: Yup.string().required('Le champ est obligatoire'),
+    email: Yup.string().email('Email format is incorrect').required('The field is required'),
+    password: Yup.string().required('The field is required'),
     passwordConfirmation: Yup.string()
-      .required('Le champ est obligatoire')
-      .oneOf([Yup.ref('password')], 'Les mots de passe ne correspondent pas'),
+      .required('The field is required')
+      .oneOf([Yup.ref('password')], 'Passwords do not match'),
   });
   const methods = useForm<ResetPasswordInputForm>({
     resolver: yupResolver(ResetPasswordSchema),
@@ -62,7 +60,7 @@ const ResetPassword = (props: ResetPasswordProps) => {
           fontWeight: 'bold',
         }}
       >
-        Modifier le mot de passe
+        Change the password
       </Typography>
       <Card sx={{ maxWidth: '450px', margin: 'auto' }}>
         <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
@@ -89,13 +87,13 @@ const ResetPassword = (props: ResetPasswordProps) => {
                 loadingPosition="start"
                 loading={isSubmitting}
               >
-                Modifier mon mot de passe
+                Change my password
               </LoadingButton>
             </Grid>
             <Grid item xs={12} sx={{ textAlign: 'center' }}>
               <Typography variant="body2" color="text.secondary">
-                Vous avez retrouvé votre mot de passe ? {` `}
-                <Link href={Routes.Auth.Login}>Cliquez ici</Link>
+                Have you found your password? {` `}
+                <Link href={Routes.Auth.Login}>Click here</Link>
               </Typography>
             </Grid>
           </Grid>
