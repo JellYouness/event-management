@@ -20,16 +20,8 @@ const Index: NextPage = () => {
   };
   return (
     <>
-      {/* <PageHeader title="Dashboard" />
-      <EventsCards filterToolbar fetchItems /> */}
-      <CreateCrudItemForm<Upload, CreateOneInput>
-        routes={Routes.Users}
-        useItems={useUploads}
-        schema={schema}
-        defaultValues={defaultValues}
-      >
-        <RHFImageDropzone name="file" label="image" />
-      </CreateCrudItemForm>
+      <PageHeader title="Dashboard" />
+      <EventsCards filterToolbar fetchItems />
     </>
   );
 };

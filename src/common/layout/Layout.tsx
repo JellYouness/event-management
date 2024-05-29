@@ -52,7 +52,7 @@ const Layout = (props: ILayoutProps) => {
               />
             )}
 
-            <Topbar sx={leftBarStyle} />
+            <Topbar sx={leftBarStyle} openLeftbar={openLeftbar} />
             <Box
               sx={{
                 display: 'flex',

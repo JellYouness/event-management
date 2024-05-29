@@ -260,7 +260,7 @@ const Leftbar = (props: LeftbarProps) => {
             }}
           >
             <ExitToAppOutlined sx={{ marginRight: 1 }} fontSize="small" />
-            <Typography variant="body2" sx={{ cursor: 'pointer' }}>
+            <Typography variant="body2" fontWeight={700} sx={{ cursor: 'pointer' }}>
               Log Out
             </Typography>
           </IconButton>
@@ -271,7 +271,7 @@ const Leftbar = (props: LeftbarProps) => {
           sx={{
             position: 'absolute',
             display: 'flex',
-            top: 15,
+            top: { xs: 8, sm: 15 },
             left: {
               xs: 6,
               sm: 18,

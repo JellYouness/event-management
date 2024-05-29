@@ -135,7 +135,7 @@ const useItems = <Item, CreateOneInput, UpdateOneInput>(
       apiRoutes.UpdateOne.replace('{id}', id.toString()),
       {
         method: 'PUT',
-        body: input,
+        body: { userId: id, ...input},
         ...options,
       }
     );

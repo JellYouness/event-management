@@ -34,9 +34,10 @@ const FilterToolbar = (props: FilterToolbarProps) => {
   } = props.filterItems;
   return (
     <Paper sx={{ p: 1.5 }}>
-      <Grid container alignItems="center" justifyContent="space-between">
-        <Grid item>
+      <Grid container alignItems="center" justifyContent="space-between" spacing={1}>
+        <Grid item xs={12} sm={6} md={4} lg={2}>
           <TextField
+            fullWidth={{ xs: true, sm: false }}
             label="Search"
             variant="outlined"
             value={search}
@@ -50,13 +51,14 @@ const FilterToolbar = (props: FilterToolbarProps) => {
             }}
           />
         </Grid>
-        <Grid item>
+        <Grid item xs={12} sm={6} md={4} lg={2}>
           <LocalizationProvider dateAdapter={AdapterDayjs}>
             <DatePicker label="Date" value={date} onChange={(newValue) => setDate(newValue)} />
           </LocalizationProvider>
         </Grid>
-        <Grid item>
+        <Grid item xs={12} sm={6} md={4} lg={2}>
           <TextField
+            fullWidth={{ xs: true, sm: false }}
             label="Location"
             variant="outlined"
             value={location}
@@ -76,9 +78,9 @@ const FilterToolbar = (props: FilterToolbarProps) => {
             value={eventStatus}
             onChange={(e) => setEventStatus(e.target.value)}
           >
-            <MenuItem value="all">All</MenuItem>
             <MenuItem value="upcoming">Upcoming</MenuItem>
             <MenuItem value="past">Past</MenuItem>
+            <MenuItem value="all">All</MenuItem>
           </Select>
         </Grid>
         <Grid item>

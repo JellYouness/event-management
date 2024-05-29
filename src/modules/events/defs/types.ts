@@ -9,6 +9,7 @@ export interface Event extends CrudObject {
   maxParticipants: number;
   image: string;
   isCanceled: boolean;
+  isRegistered?: boolean;
   participants: number;
   user?: {
     name: string;

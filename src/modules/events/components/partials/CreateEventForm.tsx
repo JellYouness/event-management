@@ -56,32 +56,29 @@ const CreateEventForm = (_props: CreateEventFormProps) => {
         onPostSubmit={onPostSubmit}
       >
         <Grid container spacing={3} sx={{ padding: 6 }}>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <RHFTextField name="name" label="Name" />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <RHFDatePicker name="date" label="Date" />
             {/* <RHFTextField name="date" label="Date" /> */}
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             {/* <InputLabel>Location</InputLabel> */}
             <RHFTextField name="location" label="Location" />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <RHFTextField
               type="number"
               name="maxParticipants"
               label="Maximum Number of Participants"
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <RHFTextField multiline rows={6} name="description" label="Description" />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <RHFImageDropzone name="image" label="Image" />
-          </Grid>
-          <Grid item xs={2} sx={{mx: 'auto'}}>
-            <RHFSwitch name="canceled" label="Canceled" />
           </Grid>
         </Grid>
       </CreateCrudItemForm>

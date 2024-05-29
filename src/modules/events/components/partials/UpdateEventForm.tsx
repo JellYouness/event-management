@@ -10,12 +10,16 @@ import useEvents, { UpdateOneInput } from '@modules/events/hooks/api/useEvents';
 import { Grid, MenuItem } from '@mui/material';
 import * as Yup from 'yup';
 import dayjs from 'dayjs';
+import { ItemResponse } from '@common/hooks/useItems';
+import { UseFormReturn } from 'react-hook-form';
+import { useRouter } from 'next/router';
 
 interface UpdateEventFormProps {
   item: Event;
 }
 
 const UpdateEventForm = (props: UpdateEventFormProps) => {
+  const router = useRouter();
   const { item } = props;
   const schema = Yup.object().shape({
     name: Yup.string().required('The field is required'),
@@ -36,6 +40,16 @@ const UpdateEventForm = (props: UpdateEventFormProps) => {
     image: item.image,
     isCanceled: item.isCanceled,
   };
+
+  const onPostSubmit = async (
+    _data: UpdateOneInput,
+    response: ItemResponse<Event>,
+    _methods: UseFormReturn<UpdateOneInput>
+  ) => {
+    if (response.success) {
+      router.push(Routes.Events.ReadOne.replace('{id}', item.id.toString()));
+    }
+  };
   return (
     <>
       <UpdateCrudItemForm<Event, UpdateOneInput>
@@ -44,29 +58,30 @@ const UpdateEventForm = (props: UpdateEventFormProps) => {
         useItems={useEvents}
         schema={schema}
         defaultValues={defaultValues}
+        onPostSubmit={onPostSubmit}
       >
         <Grid container spacing={3} sx={{ padding: 6 }}>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <RHFTextField name="name" label="Name" />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             {/* <RHFDatePicker name="date" label="Date" /> */}
             <RHFTextField name="date" label="Date" />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <RHFTextField name="location" label="Location" />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <RHFTextField
               type="number"
               name="maxParticipants"
               label="Maximum Number of Participants"
             />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <RHFTextField multiline rows={6} name="description" label="Description" />
           </Grid>
-          <Grid item xs={6}>
+          <Grid item xs={12} md={6}>
             <RHFImageDropzone name="image" label="Image" />
           </Grid>
           <Grid item xs={12}>

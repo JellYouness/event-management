@@ -58,7 +58,7 @@ const EventPage: NextPage = () => {
         action={{
           label: Labels.Events.EditOne,
           startIcon: <Create />,
-          onClick: () => router.push(Routes.Events.EditOne.replace('[id]', id.toString())),
+          onClick: () => router.push(Routes.Events.EditOne.replace('{id}', id.toString())),
           permission: {
             entity: Namespaces.Events,
             action: CRUD_ACTION.UPDATE,
@@ -73,82 +73,95 @@ const EventPage: NextPage = () => {
           { name: item ? item.name : Labels.Users.EditOne },
         ]}
       />
-      <Card>
-        <CardContent>
-          <Grid container spacing={2}>
-            <Grid item xs={12} sm={7}>
-              <Stack spacing={2.5}>
-                {item?.isCanceled ? (
-                  <Typography color="white" bgcolor="red" textAlign="center" variant="body1">
-                    Canceled
-                  </Typography>
-                ) : (
-                  <Typography color="white" bgcolor="green" textAlign="center" variant="body1">
-                    Active
-                  </Typography>
-                )}
-                <Typography variant="h3">{item?.name}</Typography>
-                <Stack direction="row" alignItems="center" spacing={2} my={1}>
-                  <AccessTime color="success" />
-                  <Typography variant="h6" fontWeight={400}>
-                    {item?.date.toString()}
-                  </Typography>
+
+      {item ? (
+        <Card>
+          <CardContent>
+            <Grid container spacing={2}>
+              <Grid item xs={12} sm={7}>
+                <Stack spacing={2.5}>
+                  {item.isCanceled ? (
+                    <Typography color="white" bgcolor="red" textAlign="center" variant="body1">
+                      Canceled
+                    </Typography>
+                  ) : (
+                    <Typography color="white" bgcolor="green" textAlign="center" variant="body1">
+                      Active
+                    </Typography>
+                  )}
+                  <Typography variant="h3">{item?.name}</Typography>
+                  <Stack direction="row" alignItems="center" spacing={2} my={1}>
+                    <AccessTime color="primary" />
+                    <Typography variant="h6" fontWeight={400}>
+                      {item.date.toString()}
+                    </Typography>
+                  </Stack>
+                  <Stack direction="row" alignItems="center" spacing={2} my={1}>
+                    <LocationOn color="primary" />
+                    <Typography variant="h6" fontWeight={400}>
+                      {item.location}
+                    </Typography>
+                  </Stack>
+                  <Stack direction="row" alignItems="center" spacing={2} my={1}>
+                    <EventSeat color="primary" />
+                    <Typography variant="body1">
+                      {item.participants}/{item.maxParticipants}
+                    </Typography>
+                  </Stack>
+                  <Stack direction="row" alignItems="center" spacing={2} my={1}>
+                    <HistoryEdu color="primary" />
+                    <Typography variant="body1">By {item.user?.name}</Typography>
+                  </Stack>
                 </Stack>
-                <Stack direction="row" alignItems="center" spacing={2} my={1}>
-                  <LocationOn color="success" />
-                  <Typography variant="h6" fontWeight={400}>
-                    {item?.location}
-                  </Typography>
-                </Stack>
-                <Stack direction="row" alignItems="center" spacing={2} my={1}>
-                  <EventSeat color="success" />
-                  <Typography variant="body1">
-                    {item?.participants}/{item?.maxParticipants}
-                  </Typography>
-                </Stack>
-                <Stack direction="row" alignItems="center" spacing={2} my={1}>
-                  <HistoryEdu color="success" />
-                  <Typography variant="body1">By {item?.user?.name}</Typography>
-                </Stack>
-              </Stack>
+              </Grid>
+              <Grid item xs={12} sm={5}>
+                <Image
+                  src="/event.avif"
+                  alt="Event 1"
+                  width={0}
+                  height={0}
+                  sizes="100vw"
+                  style={{ width: '100%', height: 'auto' }}
+                />
+              </Grid>
             </Grid>
-            <Grid item xs={12} sm={5}>
-              <Image
-                src="/event.avif"
-                alt="Event 1"
-                width={0}
-                height={0}
-                sizes="100vw"
-                style={{ width: '100%', height: 'auto' }}
-              />
-            </Grid>
-          </Grid>
-          <Typography variant="h6" mt={2}>
-            Description
-          </Typography>
-          <Typography variant="body1">{item?.description}</Typography>
-        </CardContent>
-        <CardActions>
-          {item?.participants && item?.participants < item?.maxParticipants ? (
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={() =>
-                registerOne(id, { userId: user?.id } as any, {
-                  displayProgress: true,
-                  displaySuccess: true,
-                })
-              }
-            >
-              Register
-            </Button>
-          ) : (
-            <Button variant="contained" color="primary" disabled>
-              Full
-            </Button>
-          )}
-        </CardActions>
-      </Card>
+            <Typography variant="h6" mt={2}>
+              Description
+            </Typography>
+            <Typography variant="body1">{item?.description}</Typography>
+          </CardContent>
+          <CardActions>
+            {item.participants < item.maxParticipants ? (
+              item.isRegistred ? (
+                <Button variant="contained" color="info">
+                  Registered
+                </Button>
+              ) : (
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() =>
+                    registerOne(id, { userId: user?.id } as any, {
+                      displayProgress: true,
+                      displaySuccess: true,
+                    })
+                  }
+                >
+                  Register
+                </Button>
+              )
+            ) : (
+              <Button variant="contained" color="warning">
+                Full
+              </Button>
+            )}
+          </CardActions>
+        </Card>
+      ) : (
+        <Stack alignItems="center" justifyContent="center">
+          <Typography variant="h6">Event not found</Typography>
+        </Stack>
+      )}
     </>
   );
 };

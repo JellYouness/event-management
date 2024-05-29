@@ -158,13 +158,13 @@ const ItemsCards = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                     <CardContent>
                       <Typography variant="h5">{item.name}</Typography>
                       <Stack direction="row" alignItems="center" spacing={2} my={1}>
-                        <AccessTime />
+                        <AccessTime sx={{ color: 'text.secondary' }} />
                         <Typography variant="body1">
                           {dayjs(item.date).format('ddd, D MMM, YYYY | HH:mm')}
                         </Typography>
                       </Stack>
                       <Stack direction="row" alignItems="center" spacing={2} my={1}>
-                        <LocationOn />
+                        <LocationOn sx={{ color: 'text.secondary' }} />
                         <Typography variant="body1">{item.location}</Typography>
                       </Stack>
                       {/* <Stack direction="row" alignItems="center" spacing={2} my={1}>
@@ -178,8 +178,8 @@ const ItemsCards = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                       </Stack> */}
                     </CardContent>
                     <CardActions sx={{ justifyContent: 'space-between' }}>
-                      <Stack direction="row" alignItems="center" spacing={2} my={1}>
-                        <EventSeat />
+                      <Stack direction="row" alignItems="center" spacing={2} my={1} ml={1}>
+                        <EventSeat sx={{ color: 'text.secondary' }} />
                         <Typography variant="body1">
                           {item.participants}/{item.maxParticipants}
                         </Typography>

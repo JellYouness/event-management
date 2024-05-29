@@ -37,7 +37,7 @@ interface TopbarItem {
   }>;
 }
 
-const Topbar = ({ sx }: any) => {
+const Topbar = ({ sx, openLeftbar }: any) => {
   const [showDrawer, setShowDrawer] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
 
@@ -102,7 +102,12 @@ const Topbar = ({ sx }: any) => {
     >
       <Container>
         <Toolbar sx={{ px: { xs: 0, sm: 0 } }}>
-          <Stack flexDirection="row" alignItems="center" flexGrow={1}>
+          <Stack
+            flexDirection="row"
+            alignItems="center"
+            flexGrow={1}
+            sx={{ pl: !openLeftbar ? 4 : 0 }}
+          >
             <Logo
               id="topbar-logo"
               onClick={() => router.push(Routes.Common.Home)}

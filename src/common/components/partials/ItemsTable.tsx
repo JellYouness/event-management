@@ -58,7 +58,7 @@ const ItemsTable = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
           setAnchorEl(null);
         };
 
-        if (canNot(namespace, CRUD_ACTION.DELETE) && canNot(namespace, CRUD_ACTION.UPDATE)) {
+        if (canNot(namespace, CRUD_ACTION.DELETE) && canNot(namespace, CRUD_ACTION.UPDATE) && canNot(namespace, CRUD_ACTION.CANCEL)){ 
           return null;
         }
         return (
@@ -72,7 +72,7 @@ const ItemsTable = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
               arrow="right-top"
               sx={{ width: 140 }}
             >
-              {can(namespace, CRUD_ACTION.UPDATE) && (
+              {can(namespace, CRUD_ACTION.UPDATE, params.row.id) && (
                 <MenuItem
                   onClick={() => {
                     handleMenuClose();
@@ -93,17 +93,19 @@ const ItemsTable = <Item, CreateOneInput, UpdateOneInput, Row extends CrudRow>(
                   <Cancel /> Cancel
                 </MenuItem>
               )}
-              {params.row.isCanceled ? can(namespace, CRUD_ACTION.CANCEL) && (
-                <MenuItem
-                  onClick={() => {
-                    setToRestoreId(params.row.id);
-                    handleMenuClose();
-                  }}
-                  sx={{ color: 'success.main' }}
-                >
-                  <Cancel /> Restore
-                </MenuItem>
-              ): null}
+              {params.row.isCanceled
+                ? can(namespace, CRUD_ACTION.CANCEL) && (
+                    <MenuItem
+                      onClick={() => {
+                        setToRestoreId(params.row.id);
+                        handleMenuClose();
+                      }}
+                      sx={{ color: 'success.main' }}
+                    >
+                      <Cancel /> Restore
+                    </MenuItem>
+                  )
+                : null}
               {can(namespace, CRUD_ACTION.DELETE) && (
                 <MenuItem
                   onClick={() => {
